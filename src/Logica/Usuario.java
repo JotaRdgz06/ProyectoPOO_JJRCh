@@ -1,16 +1,20 @@
 package Logica;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario implements Serializable {
 	private String nombre;
 	private String telefono;
 	private String correo;
+	private List<Prestamo> prestamos;
 	
 	public Usuario(String nombre, String telefono, String correo) {
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.correo = correo;
+		this.prestamos = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -35,5 +39,9 @@ public class Usuario implements Serializable {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+	
+	public List<Prestamo> getPrestamos(){
+		return prestamos;
 	}
 }
