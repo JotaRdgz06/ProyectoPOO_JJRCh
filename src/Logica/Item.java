@@ -1,5 +1,62 @@
 package Logica;
 
-public class Item {
+import java.util.ArrayList;
+import java.util.List;
 
+public class Item {
+	private int codigo;
+	private String nombre;
+	private String descripcion;
+	private boolean prestado;
+	private Tipo tipo;
+	private List<Categoria> categorias;
+	
+	public Item(int codigo, String nombre, String descripcion, Tipo tipo) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.prestado = false;
+		this.tipo = tipo;
+		this.categorias = new ArrayList<>();
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+	
+	public boolean estaPrestado() {
+		return prestado;
+	}
 }

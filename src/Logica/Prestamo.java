@@ -11,7 +11,6 @@ public class Prestamo implements Serializable {
     private Alerta alerta;
     
 	public Prestamo(int codigo, Usuario usuario) {
-		super();
 		this.codigo = codigo;
 		this.usuario = usuario;
 		this.items = new ArrayList<>();
@@ -46,5 +45,5 @@ public class Prestamo implements Serializable {
 		return items;
 	}
     
-    
+	
 }
