@@ -5,14 +5,20 @@ import java.io.Serializable;
 public class Tipo implements Serializable{
 	private int codigo;
 	private String nombre;
-	private Item item;
+	private boolean esGenerico;
 	
-	public Tipo(int codigo, String nombre, Item item) {
+	public Tipo(int codigo, String nombre) {
 		this.codigo = codigo;
 		this.nombre = nombre;
-		this.item = item;
+		this.esGenerico = false;
 	}
 
+	public Tipo(int codigo, String nombre, boolean esGenerico) {
+		this.codigo = codigo;
+        this.nombre = nombre;
+        this.esGenerico = esGenerico;
+	}
+	
 	public int getCodigo() {
 		return codigo;
 	}
@@ -29,11 +35,7 @@ public class Tipo implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
+	public boolean esEsGenerico() {
+		return esGenerico;
 	}
 }
