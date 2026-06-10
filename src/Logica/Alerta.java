@@ -7,14 +7,16 @@ public class Alerta implements Serializable {
 	
 	private TipoAlerta tipo;
     private LocalDateTime fechaActivacion;
+    private String mensaje;
 
     public enum TipoAlerta {
 		UNA_VEZ, RECURRENTE
 	}
     
-    public Alerta(TipoAlerta tipo, LocalDateTime fechaActivacion) {
+    public Alerta(TipoAlerta tipo, LocalDateTime fechaActivacion, String mensaje) {
         this.tipo = tipo;
         this.fechaActivacion = fechaActivacion;
+        this.mensaje = mensaje;
     }
 	
     public TipoAlerta getTipo() {
@@ -33,7 +35,15 @@ public class Alerta implements Serializable {
         this.fechaActivacion = fechaActivacion;
     }
     
-    public boolean debeActivarse() {
+    public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public boolean debeActivarse() {
         return LocalDateTime.now().isAfter(fechaActivacion);
     }
 }
