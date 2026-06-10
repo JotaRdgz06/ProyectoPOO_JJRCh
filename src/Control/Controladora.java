@@ -68,6 +68,38 @@ public class Controladora implements Serializable {
 	public void consultarUsuario() {
 		
 	}
+	
+	public void crearCategoria() {
+		
+	}
+	
+	public void modificarCategoria() {
+		
+	}
+	
+	public void borrarCategoria() {
+		
+	}
+	
+	public void consultarCategoria() {
+		
+	}
+	
+	public void crearTipo() {
+		
+	}
+	
+	public void modificarTipo() {
+		
+	}
+	
+	public void borrarTipo() {
+		
+	}
+	
+	public void consultarTipo() {
+		
+	}
 
 	public static void guardarDatos() throws IOException {
     	FileOutputStream file = new FileOutputStream("DatosProyecto.dat");
