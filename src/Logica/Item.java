@@ -1,9 +1,10 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item {
+public class Item implements Serializable {
 	private int codigo;
 	private String nombre;
 	private String descripcion;
@@ -58,5 +59,17 @@ public class Item {
 	
 	public boolean estaPrestado() {
 		return prestado;
+	}
+	
+	public void marcarComoPrestado() {
+		this.prestado = true;
+	}
+	
+	public void marcarComoLibre() {
+		this.prestado = false;
+	}
+	
+	public void devolverATipoGenerico(Tipo generico) {
+		this.tipo = generico;
 	}
 }
