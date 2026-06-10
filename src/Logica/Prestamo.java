@@ -69,4 +69,8 @@ public class Prestamo implements Serializable {
 	public boolean tieneAlerta() {
         return alerta != null;
     }
+	
+	public boolean estaVacio() {
+        return items.isEmpty();
+    }
 }
