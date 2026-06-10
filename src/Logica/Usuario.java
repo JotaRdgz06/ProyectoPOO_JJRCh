@@ -44,4 +44,16 @@ public class Usuario implements Serializable {
 	public List<Prestamo> getPrestamos(){
 		return prestamos;
 	}
+	
+	public void agregarPrestamo(Prestamo prestamo) {
+        prestamos.add(prestamo);
+    }
+	
+	public boolean borrarPrestamo(Prestamo prestamo) {
+        return prestamos.remove(prestamo);
+    }
+	
+	public boolean puedeEliminarse() {
+        return prestamos.isEmpty();
+    }
 }
