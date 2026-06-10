@@ -28,4 +28,12 @@ public class Alerta implements Serializable {
     public LocalDateTime getFechaActivacion() {
     	return fechaActivacion;
     }
+    
+    public void setFechaActivacion(LocalDateTime fechaActivacion) {
+        this.fechaActivacion = fechaActivacion;
+    }
+    
+    public boolean debeActivarse() {
+        return LocalDateTime.now().isAfter(fechaActivacion);
+    }
 }
