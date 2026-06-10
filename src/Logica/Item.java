@@ -72,4 +72,18 @@ public class Item implements Serializable {
 	public void devolverATipoGenerico(Tipo generico) {
 		this.tipo = generico;
 	}
+	
+	public void agregarCategoria(Categoria categoria) {
+        if (!categorias.contains(categoria)) {
+            categorias.add(categoria);
+        }
+    }
+	
+	public void eliminarCategoria(Categoria categoria) {
+        categorias.remove(categoria);
+    }
+	
+	public boolean puedeEliminarse() {
+        return !prestado;
+    }
 }
