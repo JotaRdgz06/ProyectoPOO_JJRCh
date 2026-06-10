@@ -38,4 +38,8 @@ public class Tipo implements Serializable{
 	public boolean esEsGenerico() {
 		return esGenerico;
 	}
+	
+	public boolean puedeEliminarse() {
+        return !esGenerico;
+    }
 }
