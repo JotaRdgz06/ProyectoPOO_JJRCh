@@ -69,16 +69,26 @@ public class Controladora implements Serializable {
 		return items;
 	}
 	
-	public void crearUsuario() {
-		
+	public void crearUsuario(String nombre, String telefono, String correo) {
+		usuarios.add(new Usuario(nombre, telefono, correo));
 	}
 	
-	public void modificarUsuario() {
-		
+	public void modificarUsuario(Usuario usuario, String nombre, String telefono, String correo) throws Exception {
+		if (!usuarios.contains(usuario)) {
+			throw new Exception("No se encontró el usuario");
+		} else {
+			usuario.setNombre(nombre);
+			usuario.setTelefono(telefono);
+			usuario.setCorreo(correo);
+		}
 	}
 	
-	public void borrarUsuario() {
-		
+	public void borrarUsuario(Usuario usuario) throws Exception {
+		if (!usuarios.contains(usuario))
+			throw new Exception("No se encontró el item");
+		if (!usuario.puedeEliminarse())
+			throw new Exception("El usuario tiene prestamos pendientes");
+		usuarios.remove(usuario);
 	}
 	
 	public List<Usuario> consultarUsuario() {
