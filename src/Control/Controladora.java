@@ -24,13 +24,15 @@ public class Controladora implements Serializable {
 	private List<Usuario> usuarios;
 	private List<Categoria> categorias;
 	private List<Tipo> tipos;
-	private Map<Integer, Item> items;
+	private List<Item> items;
+	private int codigoAutomatico;
 	
 	private Controladora() {
 		prestamos = new ArrayList<>();
 		usuarios = new ArrayList<>();
 		categorias = new ArrayList<>();
 		tipos = new ArrayList<>();
+		codigoAutomatico = 1;
 	}
 	
 	public static Controladora getInstance() {
@@ -40,23 +42,31 @@ public class Controladora implements Serializable {
         return instance;
     }
 	
-	public void crearItem(int codigo, String nombre, String descripcion, Tipo tipo) throws Exception {
-		if (items.containsKey(codigo)){
-			throw new Exception("No se encontró el usuario");
+	public void crearItem(String nombre, String descripcion, Tipo tipo) throws Exception {
+		items.add(new Item(codigoAutomatico, nombre, descripcion, tipo));
+		codigoAutomatico++;
+	}
+	
+	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo) throws Exception {
+		if (!items.contains(item)) {
+			throw new Exception("No se encontró el item");
+		} else {
+			item.setNombre(nombre);
+			item.setDescripcion(descripcion);
+			item.setTipo(tipo);
 		}
-		items.put(codigo, new Item(codigo, nombre, descripcion, tipo));
+    }
+	
+	public void borrarItem(Item item) throws Exception {
+		if (!items.contains(item))
+			throw new Exception("No se encontró el item");
+		if (!item.puedeEliminarse())
+			throw new Exception("El item está siendo prestado");
+		items.remove(item);
 	}
 	
-	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo) {
-		
-	}
-	
-	public void borrarItem() {
-		
-	}
-	
-	public void consultarItem() {
-		
+	public List<Item> consultarItem() {
+		return items;
 	}
 	
 	public void crearUsuario() {
