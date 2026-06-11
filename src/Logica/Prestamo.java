@@ -50,11 +50,10 @@ public class Prestamo implements Serializable {
 	    item.marcarComoPrestado();
 	}
 	
-	public void borrarItem(Item item) {
-		if (items.remove(item)) {
-			item.marcarComoLibre();
-		}
-	}
+	public void eliminarItem(Item item) {
+        items.remove(item);
+        item.marcarComoLibre();
+    }
 	
 	public void finalizar() {
         for (Item item : items) {

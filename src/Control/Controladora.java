@@ -159,12 +159,18 @@ public class Controladora implements Serializable {
 	    prestamo.agregarItem(item);
 	}
 	
-	public void eliminarItemPrestamo() {
-		
+	public void eliminarItemPrestamo(Prestamo prestamo, Item item) throws Exception {
+		if (item.estaPrestado()) {
+	        throw new Exception("El ítem no puede agregarse porque ya está prestado.");
+	    }
+	    prestamo.eliminarItem(item);
 	}
 	
-	public void retornarItemPrestamo() {
-		
+	public void retornarItemPrestamo(Prestamo prestamo, Item item) throws Exception {
+		if (item.estaPrestado()) {
+	        throw new Exception("El ítem no puede agregarse porque ya está prestado.");
+	    }
+	    prestamo.eliminarItem(item);
 	}
 	
 	public void finalizarPrestamo() {
