@@ -86,4 +86,8 @@ public class Item implements Serializable {
 	public boolean puedeEliminarse() {
         return !prestado;
     }
+	
+	public void ponerTipoGenerico(Tipo tipoGenerico) {
+        this.tipo = tipoGenerico;
+    }
 }
