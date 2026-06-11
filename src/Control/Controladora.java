@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logica.Alerta;
 import Logica.Categoria;
 import Logica.Item;
 import Logica.Prestamo;
@@ -173,9 +174,20 @@ public class Controladora implements Serializable {
 	    prestamo.eliminarItem(item);
 	}
 	
-	public void finalizarPrestamo() {
-		
-	}
+	public void finalizarPrestamo(Prestamo prestamo) {
+        prestamo.finalizar();
+        Usuario usuarioDelPrestamo = prestamo.getUsuario();
+        usuarioDelPrestamo.borrarPrestamo(prestamo);
+        prestamos.remove(prestamo);
+    }
+	
+	 public void agregarAlertaPrestamo(Prestamo prestamo, Alerta alerta) {
+	        prestamo.setAlerta(alerta);
+	    }
+	
+	 public List<Prestamo> getPrestamos() {
+	        return prestamos;
+	    }
 	
 	public void reporteUsuario() {
 		
