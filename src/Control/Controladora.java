@@ -25,6 +25,7 @@ public class Controladora implements Serializable {
 	private List<Tipo> tipos;
 	private List<Item> items;
 	private int codigoAutomatico;
+	private Tipo tipoGenerico;
 	
 	private Controladora() {
 		prestamos = new ArrayList<>();
@@ -32,6 +33,7 @@ public class Controladora implements Serializable {
 		categorias = new ArrayList<>();
 		tipos = new ArrayList<>();
 		codigoAutomatico = 1;
+		tipoGenerico = new Tipo(0, "Generico", true);
 	}
 	
 	public static Controladora getInstance() {
@@ -99,7 +101,9 @@ public class Controladora implements Serializable {
 		codigoAutomatico++;
 	}
 	
-	public void modificarCategoria(Categoria categoria, String nombre) {
+	public void modificarCategoria(Categoria categoria, String nombre) throws Exception {
+		if (!categorias.contains(categoria))
+			throw new Exception("No se encontró la categoria");
 		categoria.setNombre(nombre);
 	}
 	
@@ -113,16 +117,28 @@ public class Controladora implements Serializable {
 		return categorias;
 	}
 	
-	public void crearTipo() {
-		
+	public void crearTipo(String nombre) {
+		tipos.add(new Tipo(codigoAutomatico, nombre));
+		codigoAutomatico++;
 	}
 	
-	public void modificarTipo() {
-		
+	public void modificarTipo(Tipo tipo, String nombre) throws Exception {
+		if (!tipos.contains(tipo)) {
+			throw new Exception("No se encontró el tipo");
+		} else {
+			tipo.setNombre(nombre);
+		}
 	}
 	
-	public void borrarTipo() {
-		
+	public void borrarTipo(Tipo tipo) throws Exception {
+		if (tipo.puedeEliminarse())
+			throw new Exception("No se pudo eliminar");
+		for (Item i : items) {
+			Tipo tipoItem = i.getTipo();
+			if (tipoItem == tipo)
+				i.ponerTipoGenerico(tipoGenerico);
+		}
+		tipos.remove(tipo);
 	}
 	
 	public List<Tipo> consultarTipo() {
