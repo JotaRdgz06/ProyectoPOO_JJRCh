@@ -8,8 +8,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Logica.Categoria;
+import Logica.Item;
 import Logica.Prestamo;
 import Logica.Tipo;
 import Logica.Usuario;
@@ -22,6 +24,7 @@ public class Controladora implements Serializable {
 	private List<Usuario> usuarios;
 	private List<Categoria> categorias;
 	private List<Tipo> tipos;
+	private Map<Integer, Item> items;
 	
 	private Controladora() {
 		prestamos = new ArrayList<>();
@@ -37,11 +40,14 @@ public class Controladora implements Serializable {
         return instance;
     }
 	
-	public void crearItem() {
-		
+	public void crearItem(int codigo, String nombre, String descripcion, Tipo tipo) throws Exception {
+		if (items.containsKey(codigo)){
+			throw new Exception("No se encontró el usuario");
+		}
+		items.put(codigo, new Item(codigo, nombre, descripcion, tipo));
 	}
 	
-	public void modificarItem() {
+	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo) {
 		
 	}
 	
