@@ -145,12 +145,18 @@ public class Controladora implements Serializable {
 		return tipos;
 	}
 	
-	public void crearPrestamo() {
-		
+	public Prestamo crearPrestamo(Usuario usuario) {
+		Prestamo nuevoPrestamo = new Prestamo(codigoAutomatico++, usuario);
+        prestamos.add(nuevoPrestamo);
+        usuario.agregarPrestamo(nuevoPrestamo);
+        return nuevoPrestamo;
 	}
 	
-	public void agregarItemPrestamo() {
-		
+	public void agregarItemPrestamo(Prestamo prestamo, Item item) throws Exception {
+		if (item.estaPrestado()) {
+	        throw new Exception("El ítem no puede agregarse porque ya está prestado.");
+	    }
+	    prestamo.agregarItem(item);
 	}
 	
 	public void eliminarItemPrestamo() {

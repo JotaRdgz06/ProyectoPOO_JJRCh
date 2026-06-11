@@ -46,10 +46,8 @@ public class Prestamo implements Serializable {
 	}
     
 	public void agregarItem(Item item) {
-		if (!item.estaPrestado()) {
-			items.add(item);
-			item.marcarComoPrestado();
-		}
+	    items.add(item);
+	    item.marcarComoPrestado();
 	}
 	
 	public void borrarItem(Item item) {
