@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import Logica.Alerta;
@@ -189,19 +191,30 @@ public class Controladora implements Serializable {
 	        return prestamos;
 	    }
 	
-	public void reporteUsuario() {
+	public List<Usuario> reporteUsuario() {
+		List<Usuario> reporteUsuario = new ArrayList<>();
+	    for (Usuario usuario : usuarios) {
+	        if (!usuario.puedeEliminarse()) {
+	        	reporteUsuario.add(usuario);
+	        }
+	    }
+	    return reporteUsuario;
+	}
+	
+	public List<Item> reporteItem() {
+		List<Item> reporteItem = new ArrayList<>();
+	    for (Item item : items) {
+	        reporteItem.add(item);
+	    }
+	    reporteItem.sort(Comparator.comparing(Item::getNombre, String.CASE_INSENSITIVE_ORDER));
+	    return reporteItem;
+	}
+	
+	public List<Categoria> reporteCategoria() {
 		
 	}
 	
-	public void reporteItem() {
-		
-	}
-	
-	public void reporteCategoria() {
-		
-	}
-	
-	public void reporteTipo() {
+	public List<Tipo> reporteTipo() {
 		
 	}
 
