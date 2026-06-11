@@ -81,8 +81,8 @@ public class Controladora implements Serializable {
 		
 	}
 	
-	public void consultarUsuario() {
-		
+	public List<Usuario> consultarUsuario() {
+		return usuarios;
 	}
 	
 	public void crearCategoria() {
@@ -97,8 +97,8 @@ public class Controladora implements Serializable {
 		
 	}
 	
-	public void consultarCategoria() {
-		
+	public List<Categoria> consultarCategoria() {
+		return categorias;
 	}
 	
 	public void crearTipo() {
@@ -113,8 +113,8 @@ public class Controladora implements Serializable {
 		
 	}
 	
-	public void consultarTipo() {
-		
+	public List<Tipo> consultarTipo() {
+		return tipos;
 	}
 	
 	public void crearPrestamo() {
