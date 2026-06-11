@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import Logica.Categoria;
 import Logica.Item;
@@ -95,16 +94,19 @@ public class Controladora implements Serializable {
 		return usuarios;
 	}
 	
-	public void crearCategoria() {
-		
+	public void crearCategoria(String nombre) {
+		categorias.add(new Categoria(codigoAutomatico, nombre));
+		codigoAutomatico++;
 	}
 	
-	public void modificarCategoria() {
-		
+	public void modificarCategoria(Categoria categoria, String nombre) {
+		categoria.setNombre(nombre);
 	}
 	
-	public void borrarCategoria() {
-		
+	public void borrarCategoria(Categoria categoria) {
+		for (Item i : items) {
+			i.eliminarCategoria(categoria);
+		}
 	}
 	
 	public List<Categoria> consultarCategoria() {
