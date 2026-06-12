@@ -211,11 +211,21 @@ public class Controladora implements Serializable {
 	}
 	
 	public List<Categoria> reporteCategoria() {
-		
+		List<Categoria> reporteCate = new ArrayList<>();
+	    for (Categoria categoria : categorias) {
+	        reporteCate.add(categoria);
+	    }
+	    reporteCate.sort(Comparator.comparing(Categoria::getNombre, String.CASE_INSENSITIVE_ORDER));
+	    return reporteCate;
 	}
 	
 	public List<Tipo> reporteTipo() {
-		
+		List<Tipo> reporteTipo = new ArrayList<>();
+	    for (Tipo tipo : tipos) {
+	    	reporteTipo.add(tipo);
+	    }
+	    reporteTipo.sort(Comparator.comparing(Tipo::getNombre, String.CASE_INSENSITIVE_ORDER));
+	    return reporteTipo;
 	}
 
 	public static void guardarDatos() throws IOException {
