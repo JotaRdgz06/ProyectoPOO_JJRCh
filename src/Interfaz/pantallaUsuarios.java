@@ -75,6 +75,25 @@ public class pantallaUsuarios extends JDialog {
 			}
 		}
 		{
+			JButton btnNewButton = new JButton("Crear");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btnNewButton.setBounds(10, 191, 84, 20);
+			contentPanel.add(btnNewButton);
+		}
+		{
+			JButton btnNewButton_1 = new JButton("Editar");
+			btnNewButton_1.setBounds(173, 191, 84, 20);
+			contentPanel.add(btnNewButton_1);
+		}
+		{
+			JButton btnNewButton_2 = new JButton("Borrar");
+			btnNewButton_2.setBounds(330, 191, 84, 20);
+			contentPanel.add(btnNewButton_2);
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
