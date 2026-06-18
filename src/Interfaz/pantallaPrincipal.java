@@ -6,10 +6,13 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class pantallaPrincipal {
 
 	private JFrame frame;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -52,9 +55,16 @@ public class pantallaPrincipal {
 		
 		JPanel administracion = new JPanel();
 		tabbedPane.addTab("Administración", null, administracion, null);
+		administracion.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 411, 162);
+		administracion.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		JPanel reportes = new JPanel();
 		tabbedPane.addTab("Reportes", null, reportes, null);
 	}
-
 }
