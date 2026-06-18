@@ -8,12 +8,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
 
 public class pantallaPrincipal {
 
 	private JFrame frame;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -58,35 +57,21 @@ public class pantallaPrincipal {
 		tabbedPane.addTab("Administración", null, administracion, null);
 		administracion.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 411, 162);
-		administracion.add(scrollPane);
+		JButton btnNewButton = new JButton("Usuarios");
+		btnNewButton.setBounds(155, 10, 111, 33);
+		administracion.add(btnNewButton);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Usuarios", "\u00CDtems", "Categor\u00EDas", "Tipos"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		scrollPane.setViewportView(table);
+		JButton btnCategorias = new JButton("Categorias");
+		btnCategorias.setBounds(155, 131, 111, 33);
+		administracion.add(btnCategorias);
+		
+		JButton btnItems = new JButton("Ítems");
+		btnItems.setBounds(155, 72, 111, 33);
+		administracion.add(btnItems);
+		
+		JButton btnTipos = new JButton("Tipos");
+		btnTipos.setBounds(155, 193, 111, 33);
+		administracion.add(btnTipos);
 		
 		JPanel reportes = new JPanel();
 		tabbedPane.addTab("Reportes", null, reportes, null);
