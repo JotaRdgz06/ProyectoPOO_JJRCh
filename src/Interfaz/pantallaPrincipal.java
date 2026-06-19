@@ -3,12 +3,19 @@ package Interfaz;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+
+import Control.Controladora;
+
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pantallaPrincipal {
 
@@ -58,6 +65,10 @@ public class pantallaPrincipal {
 		administracion.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Usuarios");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton.setBounds(155, 10, 111, 33);
 		administracion.add(btnNewButton);
 		
@@ -75,5 +86,21 @@ public class pantallaPrincipal {
 		
 		JPanel reportes = new JPanel();
 		tabbedPane.addTab("Reportes", null, reportes, null);
+	}
+	
+	private void cargarDatos() {
+		try {
+			Controladora.cargarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void guardarDatos() {
+		try {
+			Controladora.guardarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frame, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }
