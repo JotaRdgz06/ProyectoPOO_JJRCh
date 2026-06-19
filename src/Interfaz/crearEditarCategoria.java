@@ -71,7 +71,16 @@ public class crearEditarCategoria extends JDialog {
 			contentPanel.add(textField_1);
 		}
 		
-		lblNewLabel_1 = new JLabel("codigo");
+		Controladora control = Controladora.getInstance();
+        String textoCodigo;
+        if (seEstaEditando == null) {
+            Integer siguienteCodigo = control.obtenerSiguienteCodigoProducto();
+            textoCodigo = siguienteCodigo.toString();
+        } else {
+            textoCodigo = String.valueOf(categoria.getCodigo()).toString();
+        }
+		
+		lblNewLabel_1 = new JLabel(textoCodigo);
 		lblNewLabel_1.setBounds(70, 16, 44, 12);
 		contentPanel.add(lblNewLabel_1);
 		{
@@ -108,7 +117,7 @@ public class crearEditarCategoria extends JDialog {
 	}
 	
 	public void guardarUsuario() {
-        String nombre   = textField_1.getText().trim();
+        String nombre = textField_1.getText().trim();
         
         if (nombre.isEmpty()) {
         	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);

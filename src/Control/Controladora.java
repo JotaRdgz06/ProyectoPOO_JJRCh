@@ -100,9 +100,11 @@ public class Controladora implements Serializable {
 		return usuarios;
 	}
 	
-	public void crearCategoria(String nombre) {
-		categorias.add(new Categoria(codigoAutomatico, nombre));
+	public Categoria crearCategoria(String nombre) {
+		Categoria nuevaCategoria = new Categoria(codigoAutomatico, nombre);
+		categorias.add(nuevaCategoria);
 		codigoAutomatico++;
+		return nuevaCategoria;
 	}
 	
 	public void modificarCategoria(Categoria categoria, String nombre) throws Exception {
@@ -230,6 +232,9 @@ public class Controladora implements Serializable {
 	    return reporteTipo;
 	}
 
+	public Integer obtenerSiguienteCodigoProducto() {
+        return codigoAutomatico;
+    }
 	public static void guardarDatos() throws IOException {
     	FileOutputStream file = new FileOutputStream("DatosProyecto.dat");
     	ObjectOutputStream stream = new ObjectOutputStream(file);
