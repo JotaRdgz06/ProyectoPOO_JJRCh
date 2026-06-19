@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
-import Logica.Categoria;
+import Logica.Tipo;
 
 public class pantallaTipos extends JDialog {
 
@@ -110,8 +110,8 @@ public class pantallaTipos extends JDialog {
 		}
 	}
 	
-	private void crearCategoria() {
-		crearEditarCategoria ventanaDetalleCliente = new crearEditarCategoria();
+	private void crearTipo() {
+		crearEditarTipo ventanaDetalleCliente = new crearEditarTipo();
 		ventanaDetalleCliente.setVisible(true);
 		cargarCategorias();
 	}
@@ -120,9 +120,9 @@ public class pantallaTipos extends JDialog {
 		Controladora control = Controladora.getInstance();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		List<Categoria> listaUsuarios = control.consultarCategoria();
-		for (Categoria categoria: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre()};
+		List<Tipo> listaUsuarios = control.consultarTipo();
+		for (Tipo tipo: listaUsuarios) {
+			Object[] fila = new Object[] {String.valueOf(tipo.getCodigo()), tipo.getNombre()};
 			model.addRow(fila);
 		}
 	}
@@ -133,11 +133,11 @@ public class pantallaTipos extends JDialog {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Controladora control = Controladora.getInstance();
-			Categoria categoria= control.consultarCategoria().get(numeroFila);
-			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la categoria " + categoria.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			Tipo tipo= control.consultarTipo().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la categoria " + tipo.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
-					control.borrarCategoria(categoria);
+					control.borrarTipo(tipo);
 					cargarCategorias();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -151,8 +151,8 @@ public class pantallaTipos extends JDialog {
 		if (numeroFila == -1) {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			Categoria categoria = Controladora.getInstance().consultarCategoria().get(numeroFila);
-			crearEditarCategoria ventana = new crearEditarCategoria(categoria);
+			Tipo tipo = Controladora.getInstance().consultarTipo().get(numeroFila);
+			crearEditarTipo ventana = new crearEditarTipo(tipo);
 			ventana.setVisible(true); 
 			cargarCategorias();
 		}
