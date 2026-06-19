@@ -12,6 +12,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Control.Controladora;
+import Logica.Categoria;
+import Logica.Usuario;
+
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
+
 public class pantallaCategorias extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -74,6 +82,11 @@ public class pantallaCategorias extends JDialog {
 		}
 		{
 			JButton btnNewButton = new JButton("Crear");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					crearCategoria();
+				}
+			});
 			btnNewButton.setBounds(10, 202, 84, 20);
 			contentPanel.add(btnNewButton);
 		}
@@ -104,5 +117,20 @@ public class pantallaCategorias extends JDialog {
 			}
 		}
 	}
-
+	private void crearCategoria() {
+		crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
+		ventanaDetalleCliente.setVisible(true);
+		cargarCategorias();
+	}
+	
+	private void cargarCategorias() {
+		Controladora control = Controladora.getInstance();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		List<Categoria> listaUsuarios = control.consultarCategoria();
+		for (Categoria categoria: listaUsuarios) {
+			Object[] fila = new Object[] {categoria.getCodigo(), categoria.getNombre()};
+			model.addRow(fila);
+		}
+	}
 }

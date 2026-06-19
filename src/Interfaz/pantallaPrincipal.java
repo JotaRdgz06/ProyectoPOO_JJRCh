@@ -85,14 +85,32 @@ public class pantallaPrincipal {
 		administracion.add(btnNewButton);
 		
 		JButton btnCategorias = new JButton("Categorias");
+		btnCategorias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pantallaCategorias ventanaDetalleCliente = new pantallaCategorias();
+				ventanaDetalleCliente.setVisible(true);
+			}
+		});
 		btnCategorias.setBounds(155, 131, 111, 33);
 		administracion.add(btnCategorias);
 		
 		JButton btnItems = new JButton("Ítems");
+		btnItems.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pantallaItems ventanaDetalleCliente = new pantallaItems();
+				ventanaDetalleCliente.setVisible(true);
+			}
+		});
 		btnItems.setBounds(155, 72, 111, 33);
 		administracion.add(btnItems);
 		
 		JButton btnTipos = new JButton("Tipos");
+		btnTipos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pantallaTipos ventanaDetalleCliente = new pantallaTipos();
+				ventanaDetalleCliente.setVisible(true);
+			}
+		});
 		btnTipos.setBounds(155, 193, 111, 33);
 		administracion.add(btnTipos);
 		
