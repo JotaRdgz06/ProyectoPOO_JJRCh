@@ -96,6 +96,8 @@ public class pantallaUsuarios extends JDialog {
 			JButton btnNewButton = new JButton("Crear");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
+					ventanaDetalleCliente.setVisible(true);
 				}
 			});
 			btnNewButton.setBounds(10, 191, 84, 20);
