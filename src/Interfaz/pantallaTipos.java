@@ -2,15 +2,20 @@ package Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import Control.Controladora;
+import Logica.Categoria;
 
 public class pantallaTipos extends JDialog {
 
@@ -104,5 +109,69 @@ public class pantallaTipos extends JDialog {
 			}
 		}
 	}
-
+	
+	private void crearCategoria() {
+		crearEditarCategoria ventanaDetalleCliente = new crearEditarCategoria();
+		ventanaDetalleCliente.setVisible(true);
+		cargarCategorias();
+	}
+	
+	private void cargarCategorias() {
+		Controladora control = Controladora.getInstance();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		List<Categoria> listaUsuarios = control.consultarCategoria();
+		for (Categoria categoria: listaUsuarios) {
+			Object[] fila = new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre()};
+			model.addRow(fila);
+		}
+	}
+	
+	private void borrarCategoria() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Controladora control = Controladora.getInstance();
+			Categoria categoria= control.consultarCategoria().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la categoria " + categoria.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				try {
+					control.borrarCategoria(categoria);
+					cargarCategorias();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
+	
+	private void editarCategoria() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Categoria categoria = Controladora.getInstance().consultarCategoria().get(numeroFila);
+			crearEditarCategoria ventana = new crearEditarCategoria(categoria);
+			ventana.setVisible(true); 
+			cargarCategorias();
+		}
+	}
+	
+	private void cargarDatos() {
+		try {
+			Controladora.cargarDatos();
+		} catch (java.io.FileNotFoundException e) {
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void guardarDatos() {
+		try {
+			Controladora.guardarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
