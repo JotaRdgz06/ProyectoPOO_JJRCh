@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Control.Controladora;
+import Logica.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,13 +24,14 @@ public class crearEditarUsuario extends JDialog {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private Usuario seEstaEditando;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			crearEditarUsuario dialog = new crearEditarUsuario();
+			crearEditarUsuario dialog = new crearEditarUsuario(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -40,9 +42,15 @@ public class crearEditarUsuario extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	
 	public crearEditarUsuario() {
+		this(null);
+	}
+	
+	public crearEditarUsuario(Usuario usuario) {
 		setModal(true);
 		setResizable(false);
+		this.seEstaEditando = usuario;
 		setBounds(100, 100, 305, 224);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -103,6 +111,12 @@ public class crearEditarUsuario extends JDialog {
 				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+				
+				if (usuario != null) {
+		            textField.setText(usuario.getNombre());
+		            textField_1.setText(usuario.getCorreo());
+		            textField_2.setText(usuario.getTelefono());
+		        }
 			}
 		}
 	}
@@ -116,7 +130,7 @@ public class crearEditarUsuario extends JDialog {
         	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!correo.contains("@") || !correo.contains(".com.")) {
+        if (!correo.contains("@") || !correo.contains(".com")) {
             JOptionPane.showMessageDialog(contentPanel, "El email no es válido", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -127,7 +141,17 @@ public class crearEditarUsuario extends JDialog {
             return;
         }
 		Controladora control = Controladora.getInstance();
-		control.crearUsuario(nombre, telefono, correo);
-		dispose();
+		try {
+			if (seEstaEditando == null) {
+				control.crearUsuario(nombre, telefono, correo);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
+			} else {
+				control.modificarUsuario(seEstaEditando, nombre, telefono, correo);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
+			}
+			dispose();
+		} catch (Exception e) {
+            JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 	}
 }
