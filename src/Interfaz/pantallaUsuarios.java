@@ -182,7 +182,7 @@ public class pantallaUsuarios extends JDialog {
 					control.borrarUsuario(usuario);
 					cargarUsuarios();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la orden", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -191,7 +191,7 @@ public class pantallaUsuarios extends JDialog {
 	private void editarUsuario() {
 		int numeroFila = table.getSelectedRow();
 		if (numeroFila == -1) {
-			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un cliente", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Usuario usuario = Controladora.getInstance().consultarUsuario().get(numeroFila);
 			crearEditarUsuario ventana = new crearEditarUsuario(usuario);

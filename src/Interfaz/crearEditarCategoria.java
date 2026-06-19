@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Control.Controladora;
-import Logica.Usuario;
+import Logica.Categoria;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,10 +21,9 @@ public class crearEditarCategoria extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
-	private Usuario seEstaEditando;
+	private Categoria seEstaEditando;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -47,26 +46,21 @@ public class crearEditarCategoria extends JDialog {
 		this(null);
 	}
 	
-	public crearEditarCategoria(Usuario usuario) {
+	public crearEditarCategoria(Categoria categoria) {
 		setModal(true);
 		setResizable(false);
-		this.seEstaEditando = usuario;
-		setBounds(100, 100, 305, 224);
+		this.seEstaEditando = categoria;
+		setBounds(100, 100, 305, 189);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nombre:");
+		JLabel lblNewLabel = new JLabel("Código:");
 		lblNewLabel.setBounds(10, 10, 50, 24);
 		contentPanel.add(lblNewLabel);
-		
-		textField = new JTextField();
-		textField.setBounds(70, 13, 156, 18);
-		contentPanel.add(textField);
-		textField.setColumns(10);
 		{
-			JLabel lblCorreo = new JLabel("Correo:");
+			JLabel lblCorreo = new JLabel("Nombre");
 			lblCorreo.setBounds(10, 67, 50, 24);
 			contentPanel.add(lblCorreo);
 		}
@@ -76,17 +70,10 @@ public class crearEditarCategoria extends JDialog {
 			textField_1.setBounds(70, 70, 156, 18);
 			contentPanel.add(textField_1);
 		}
-		{
-			JLabel lblTelfono = new JLabel("Teléfono:");
-			lblTelfono.setBounds(10, 122, 66, 24);
-			contentPanel.add(lblTelfono);
-		}
-		{
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(70, 125, 156, 18);
-			contentPanel.add(textField_2);
-		}
+		
+		lblNewLabel_1 = new JLabel("codigo");
+		lblNewLabel_1.setBounds(70, 16, 44, 12);
+		contentPanel.add(lblNewLabel_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -112,41 +99,28 @@ public class crearEditarCategoria extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 				
-				if (usuario != null) {
-		            textField.setText(usuario.getNombre());
-		            textField_1.setText(usuario.getCorreo());
-		            textField_2.setText(usuario.getTelefono());
+				if (categoria != null) {
+					lblNewLabel_1.setText(String.valueOf(categoria.getCodigo()));
+		            textField_1.setText(categoria.getNombre());
 		        }
 			}
 		}
 	}
 	
 	public void guardarUsuario() {
-		String nombre   = textField.getText().trim();
-        String correo   = textField_1.getText().trim();
-        String telefono = textField_2.getText().trim();
+        String nombre   = textField_1.getText().trim();
         
-        if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
-        	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!correo.contains("@") || !correo.contains(".com")) {
-            JOptionPane.showMessageDialog(contentPanel, "El email no es válido", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            Integer.parseInt(telefono);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(contentPanel, "El telefono debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+        if (nombre.isEmpty()) {
+        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 		Controladora control = Controladora.getInstance();
 		try {
 			if (seEstaEditando == null) {
-				control.crearUsuario(nombre, telefono, correo);
+				control.crearCategoria(nombre);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
 			} else {
-				control.modificarUsuario(seEstaEditando, nombre, telefono, correo);
+				control.modificarCategoria(seEstaEditando, nombre);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
 			}
 			dispose();
