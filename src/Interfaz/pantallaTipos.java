@@ -166,17 +166,17 @@ public class pantallaTipos extends JDialog {
 	private void borrarTipo() {
 		int numeroFila = table.getSelectedRow();
 		if (numeroFila == -1) {
-			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un tipo", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Controladora control = Controladora.getInstance();
 			Tipo tipo= control.consultarTipo().get(numeroFila);
-			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la categoria " + tipo.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará el tipo " + tipo.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
 					control.borrarTipo(tipo);
 					cargarTipos();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar el tipo, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ public class pantallaTipos extends JDialog {
 	private void editarTipo() {
 		int numeroFila = table.getSelectedRow();
 		if (numeroFila == -1) {
-			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un tipo", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Tipo tipo = Controladora.getInstance().consultarTipo().get(numeroFila);
 			crearEditarTipo ventana = new crearEditarTipo(tipo);
