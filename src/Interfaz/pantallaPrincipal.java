@@ -52,6 +52,7 @@ public class pantallaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -76,7 +77,8 @@ public class pantallaPrincipal {
 		JButton btnNewButton = new JButton("Usuarios");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				pantallaUsuarios ventanaDetalleCliente = new pantallaUsuarios();
+				ventanaDetalleCliente.setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(155, 10, 111, 33);

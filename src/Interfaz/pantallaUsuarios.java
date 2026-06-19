@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Control.ControladoraWallRose;
 import Logica.Usuario;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -45,6 +46,13 @@ public class pantallaUsuarios extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaUsuarios() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarUsuarios();
+			}
+		});
+		setModal(true);
 		setTitle("Cliente");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
@@ -98,6 +106,7 @@ public class pantallaUsuarios extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
 					ventanaDetalleCliente.setVisible(true);
+					cargarUsuarios();
 				}
 			});
 			btnNewButton.setBounds(10, 191, 84, 20);
@@ -144,6 +153,26 @@ public class pantallaUsuarios extends JDialog {
 		for (Usuario usuario: listaUsuarios) {
 			Object[] fila = new Object[] {usuario.getNombre(), usuario.getCorreo(), usuario.getTelefono()};
 			model.addRow(fila);
+		}
+	}
+	
+	private void borrarUsuario() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una orden", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			Integer numero = (Integer) model.getValueAt(numeroFila, 0);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la orden número " + numero, "Confirmar", JOptionPane.YES_NO_OPTION);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				Controladora control = Controladora.getInstance();
+				try {
+					control.borrarUsuario(numero);
+					cargarUsuarios();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la orden", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		}
 	}
 	
