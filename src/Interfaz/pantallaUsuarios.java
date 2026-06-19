@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -83,6 +84,7 @@ public class pantallaUsuarios extends JDialog {
 						return columnEditables[column];
 					}
 				});
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				table.getColumnModel().getColumn(0).setPreferredWidth(109);
 				table.getColumnModel().getColumn(1).setResizable(false);
 				table.getColumnModel().getColumn(1).setPreferredWidth(197);

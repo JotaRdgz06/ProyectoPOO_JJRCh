@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -68,6 +69,7 @@ public class pantallaTipos extends JDialog {
 				table.getColumnModel().getColumn(0).setResizable(false);
 				table.getColumnModel().getColumn(1).setResizable(false);
 				scrollPane.setViewportView(table);
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			}
 		}
 		{

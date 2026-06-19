@@ -76,6 +76,7 @@ public class pantallaPrincipal {
 		JButton btnNewButton = new JButton("Usuarios");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnNewButton.setBounds(155, 10, 111, 33);

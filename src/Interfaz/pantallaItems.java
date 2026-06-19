@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
@@ -72,6 +73,7 @@ public class pantallaItems extends JDialog {
 				table.getColumnModel().getColumn(2).setResizable(false);
 				table.getColumnModel().getColumn(3).setResizable(false);
 				scrollPane.setViewportView(table);
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			}
 		}
 		{
@@ -95,7 +97,7 @@ public class pantallaItems extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			btnNewButton_3.setBounds(293, 190, 133, 20);
+			btnNewButton_3.setBounds(293, 190, 140, 20);
 			contentPanel.add(btnNewButton_3);
 		}
 		{
