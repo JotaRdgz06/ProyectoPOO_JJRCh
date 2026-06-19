@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Control.Controladora;
-import Logica.Categoria;
+import Logica.Tipo;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,12 +17,12 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class crearEditarCategoria extends JDialog {
+public class crearEditarTipo extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField_1;
-	private Categoria seEstaEditando;
+	private Tipo seEstaEditando;
 	private JLabel lblNewLabel_1;
 
 	/**
@@ -42,14 +42,14 @@ public class crearEditarCategoria extends JDialog {
 	 * Create the dialog.
 	 */
 	
-	public crearEditarCategoria() {
+	public crearEditarTipo() {
 		this(null);
 	}
 	
-	public crearEditarCategoria(Categoria categoria) {
+	public crearEditarTipo(Tipo tipo) {
 		setModal(true);
 		setResizable(false);
-		this.seEstaEditando = categoria;
+		this.seEstaEditando = tipo;
 		setBounds(100, 100, 305, 189);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,10 +74,10 @@ public class crearEditarCategoria extends JDialog {
 		Controladora control = Controladora.getInstance();
         String textoCodigo;
         if (seEstaEditando == null) {
-            Integer siguienteCodigo = control.obtenerSiguienteCodigoCategoria();
+            Integer siguienteCodigo = control.obtenerSiguienteCodigoTipo();
             textoCodigo = siguienteCodigo.toString();
         } else {
-            textoCodigo = String.valueOf(categoria.getCodigo()).toString();
+            textoCodigo = String.valueOf(tipo.getCodigo()).toString();
         }
 		
 		lblNewLabel_1 = new JLabel(textoCodigo);
@@ -108,9 +108,9 @@ public class crearEditarCategoria extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 				
-				if (categoria != null) {
-					lblNewLabel_1.setText(String.valueOf(categoria.getCodigo()));
-		            textField_1.setText(categoria.getNombre());
+				if (tipo != null) {
+					lblNewLabel_1.setText(String.valueOf(tipo.getCodigo()));
+		            textField_1.setText(tipo.getNombre());
 		        }
 			}
 		}
@@ -120,17 +120,17 @@ public class crearEditarCategoria extends JDialog {
         String nombre = textField_1.getText().trim();
         
         if (nombre.isEmpty()) {
-        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar el nombre del tipo", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 		Controladora control = Controladora.getInstance();
 		try {
 			if (seEstaEditando == null) {
-				control.crearCategoria(nombre);
-				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
+				control.crearTipo(nombre);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el tipo");
 			} else {
-				control.modificarCategoria(seEstaEditando, nombre);
-				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
+				control.modificarTipo(seEstaEditando, nombre);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el tipo");
 			}
 			dispose();
 		} catch (Exception e) {

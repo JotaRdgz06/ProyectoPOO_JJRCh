@@ -27,7 +27,10 @@ public class Controladora implements Serializable {
 	private List<Categoria> categorias;
 	private List<Tipo> tipos;
 	private List<Item> items;
-	private int codigoAutomatico;
+	private int codigoAutomaticoCategoria;
+	private int codigoAutomaticoTipo;
+	private int codigoAutomaticoItem;
+	private int codigoAutomaticoPrestamo;
 	private Tipo tipoGenerico;
 	
 	private Controladora() {
@@ -36,7 +39,10 @@ public class Controladora implements Serializable {
 		categorias = new ArrayList<>();
 		tipos = new ArrayList<>();
 		items = new ArrayList<>();
-		codigoAutomatico = 1;
+		codigoAutomaticoCategoria = 1;
+		codigoAutomaticoTipo = 1;
+		codigoAutomaticoItem = 1;
+		codigoAutomaticoPrestamo = 1;
 		tipoGenerico = new Tipo(0, "Generico", true);
 	}
 	
@@ -48,8 +54,8 @@ public class Controladora implements Serializable {
     }
 	
 	public void crearItem(String nombre, String descripcion, Tipo tipo) throws Exception {
-		items.add(new Item(codigoAutomatico, nombre, descripcion, tipo));
-		codigoAutomatico++;
+		items.add(new Item(codigoAutomaticoItem, nombre, descripcion, tipo));
+		codigoAutomaticoItem++;
 	}
 	
 	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo) throws Exception {
@@ -101,9 +107,9 @@ public class Controladora implements Serializable {
 	}
 	
 	public Categoria crearCategoria(String nombre) {
-		Categoria nuevaCategoria = new Categoria(codigoAutomatico, nombre);
+		Categoria nuevaCategoria = new Categoria(codigoAutomaticoCategoria, nombre);
 		categorias.add(nuevaCategoria);
-		codigoAutomatico++;
+		codigoAutomaticoCategoria++;
 		return nuevaCategoria;
 	}
 	
@@ -125,8 +131,8 @@ public class Controladora implements Serializable {
 	}
 	
 	public void crearTipo(String nombre) {
-		tipos.add(new Tipo(codigoAutomatico, nombre));
-		codigoAutomatico++;
+		tipos.add(new Tipo(codigoAutomaticoTipo, nombre));
+		codigoAutomaticoTipo++;
 	}
 	
 	public void modificarTipo(Tipo tipo, String nombre) throws Exception {
@@ -153,7 +159,7 @@ public class Controladora implements Serializable {
 	}
 	
 	public Prestamo crearPrestamo(Usuario usuario) {
-		Prestamo nuevoPrestamo = new Prestamo(codigoAutomatico++, usuario);
+		Prestamo nuevoPrestamo = new Prestamo(codigoAutomaticoPrestamo++, usuario);
         prestamos.add(nuevoPrestamo);
         usuario.agregarPrestamo(nuevoPrestamo);
         return nuevoPrestamo;
@@ -232,9 +238,22 @@ public class Controladora implements Serializable {
 	    return reporteTipo;
 	}
 
-	public Integer obtenerSiguienteCodigoProducto() {
-        return codigoAutomatico;
+	public Integer obtenerSiguienteCodigoItem() {
+        return codigoAutomaticoItem;
     }
+	
+	public Integer obtenerSiguienteCodigoPrestamo() {
+        return codigoAutomaticoItem;
+    }
+	
+	public Integer obtenerSiguienteCodigoTipo() {
+        return codigoAutomaticoItem;
+    }
+	
+	public Integer obtenerSiguienteCodigoCategoria() {
+        return codigoAutomaticoItem;
+    }
+	
 	public static void guardarDatos() throws IOException {
     	FileOutputStream file = new FileOutputStream("DatosProyecto.dat");
     	ObjectOutputStream stream = new ObjectOutputStream(file);
