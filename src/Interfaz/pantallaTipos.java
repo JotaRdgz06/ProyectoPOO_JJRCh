@@ -44,6 +44,8 @@ public class pantallaTipos extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaTipos() {
+		setModal(true);
+		setResizable(false);
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {

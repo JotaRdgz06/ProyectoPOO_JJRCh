@@ -119,6 +119,7 @@ public class pantallaItems extends JDialog {
 			JButton btnNewButton_3 = new JButton("Asignar categorias");
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					agregarCategorias();
 				}
 			});
 			btnNewButton_3.setBounds(293, 190, 140, 20);
@@ -126,6 +127,11 @@ public class pantallaItems extends JDialog {
 		}
 		{
 			JButton btnNewButton_4 = new JButton("Asignar tipo");
+			btnNewButton_4.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					agregarTipo();
+				}
+			});
 			btnNewButton_4.setBounds(436, 190, 101, 20);
 			contentPanel.add(btnNewButton_4);
 		}
@@ -159,7 +165,7 @@ public class pantallaItems extends JDialog {
 		model.setRowCount(0);
 		List<Item> listaUsuarios = control.consultarItem();
 		for (Item item: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(item.getCodigo()), item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestado()};
+			Object[] fila = new Object[] {String.valueOf(item.getCodigo()), item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS()};
 			model.addRow(fila);
 		}
 	}
