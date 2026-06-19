@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle.Control;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
@@ -30,7 +31,7 @@ public class crearEditarItem extends JDialog {
 	private JTextField textField;
 	private JLabel nombre_1;
 	private JLabel lblDescripcin;
-	private JComboBox comboBox;
+	private JComboBox<Tipo> comboBox;
 
 	/**
 	 * Launch the application.
@@ -105,7 +106,9 @@ public class crearEditarItem extends JDialog {
 			contentPanel.add(lblNewLabel_2);
 		}
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<>();
+		for (Tipo t : control.consultarTipo())
+			comboBox.addItem(t);
 		comboBox.setBounds(70, 171, 28, 20);
 		contentPanel.add(comboBox);
 		{
@@ -116,7 +119,7 @@ public class crearEditarItem extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						guardarUsuario();
+						guardarItem();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -141,11 +144,14 @@ public class crearEditarItem extends JDialog {
 		}
 	}
 	
-	public void guardarUsuario() {
+	public void guardarItem() {
         String nombre = textField_1.getText().trim();
-        String descripcion = lblDescripcin.getText().trim();
-        String tipo = comboBox.getSelectedIndex();
+        String descripcion = textField.getText().trim();
+        Tipo tipo = (Tipo) comboBox.getSelectedItem();
         
+        if (tipo == null) {
+        	JOptionPane.showMessageDialog(contentPanel, "Debe Seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         if (nombre.isEmpty()) {
         	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -156,7 +162,7 @@ public class crearEditarItem extends JDialog {
 				control.crearItem(nombre, descripcion, tipo);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
 			} else {
-				control.modificarItem(seEstaEditando, nombre);
+				control.modificarItem(seEstaEditando, nombre, descripcion, tipo);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
 			}
 			dispose();
