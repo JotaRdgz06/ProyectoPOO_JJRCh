@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
-import Control.ControladoraWallRose;
 import Logica.Usuario;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -119,6 +118,11 @@ public class pantallaUsuarios extends JDialog {
 		}
 		{
 			JButton btnNewButton_2 = new JButton("Borrar");
+			btnNewButton_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					borrarUsuario();
+				}
+			});
 			btnNewButton_2.setBounds(330, 191, 84, 20);
 			contentPanel.add(btnNewButton_2);
 		}
@@ -131,6 +135,7 @@ public class pantallaUsuarios extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						guardarDatos();
+						dispose();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -159,15 +164,14 @@ public class pantallaUsuarios extends JDialog {
 	private void borrarUsuario() {
 		int numeroFila = table.getSelectedRow();
 		if (numeroFila == -1) {
-			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una orden", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Integer numero = (Integer) model.getValueAt(numeroFila, 0);
-			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la orden número " + numero, "Confirmar", JOptionPane.YES_NO_OPTION);
+			Controladora control = Controladora.getInstance();
+			Usuario usuario = control.consultarUsuario().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará el usuario " + usuario.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
-				Controladora control = Controladora.getInstance();
 				try {
-					control.borrarUsuario(numero);
+					control.borrarUsuario(usuario);
 					cargarUsuarios();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la orden", "Error", JOptionPane.ERROR_MESSAGE);
