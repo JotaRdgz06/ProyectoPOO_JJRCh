@@ -113,6 +113,11 @@ public class pantallaUsuarios extends JDialog {
 		}
 		{
 			JButton btnNewButton_1 = new JButton("Editar");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					editarUsuario();
+				}
+			});
 			btnNewButton_1.setBounds(173, 191, 84, 20);
 			contentPanel.add(btnNewButton_1);
 		}
@@ -144,6 +149,11 @@ public class pantallaUsuarios extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -177,6 +187,18 @@ public class pantallaUsuarios extends JDialog {
 					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la orden", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		}
+	}
+	
+	private void editarUsuario() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un cliente", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			crearEditarUsuario ventana = new crearEditarUsuario();
+			ventana.setVisible(true); 
+			cargarUsuarios();
 		}
 	}
 	
