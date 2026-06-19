@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pantallaItems extends JDialog {
 
@@ -34,14 +36,14 @@ public class pantallaItems extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaItems() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 561, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 10, 416, 159);
+			scrollPane.setBounds(10, 10, 527, 159);
 			contentPanel.add(scrollPane);
 			{
 				table = new JTable();
@@ -71,6 +73,35 @@ public class pantallaItems extends JDialog {
 				table.getColumnModel().getColumn(3).setResizable(false);
 				scrollPane.setViewportView(table);
 			}
+		}
+		{
+			JButton btnNewButton = new JButton("Crear");
+			btnNewButton.setBounds(10, 190, 84, 20);
+			contentPanel.add(btnNewButton);
+		}
+		{
+			JButton btnNewButton_1 = new JButton("Editar");
+			btnNewButton_1.setBounds(105, 190, 84, 20);
+			contentPanel.add(btnNewButton_1);
+		}
+		{
+			JButton btnNewButton_2 = new JButton("Borrar");
+			btnNewButton_2.setBounds(199, 190, 84, 20);
+			contentPanel.add(btnNewButton_2);
+		}
+		{
+			JButton btnNewButton_3 = new JButton("Asignar categorias");
+			btnNewButton_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			btnNewButton_3.setBounds(293, 190, 133, 20);
+			contentPanel.add(btnNewButton_3);
+		}
+		{
+			JButton btnNewButton_4 = new JButton("Asignar tipo");
+			btnNewButton_4.setBounds(436, 190, 101, 20);
+			contentPanel.add(btnNewButton_4);
 		}
 		{
 			JPanel buttonPane = new JPanel();
