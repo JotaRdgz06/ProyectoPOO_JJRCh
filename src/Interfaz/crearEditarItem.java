@@ -141,5 +141,27 @@ public class crearEditarItem extends JDialog {
 		}
 	}
 	
-	
+	public void guardarUsuario() {
+        String nombre = textField_1.getText().trim();
+        String descripcion = lblDescripcin.getText().trim();
+        String tipo = comboBox.getSelectedIndex();
+        
+        if (nombre.isEmpty()) {
+        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+		Controladora control = Controladora.getInstance();
+		try {
+			if (seEstaEditando == null) {
+				control.crearItem(nombre, descripcion, tipo);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
+			} else {
+				control.modificarItem(seEstaEditando, nombre);
+				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
+			}
+			dispose();
+		} catch (Exception e) {
+            JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+	}
 }
