@@ -7,8 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Control.Controladora;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class crearEditarUsuario extends JDialog {
 
@@ -35,6 +41,8 @@ public class crearEditarUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public crearEditarUsuario() {
+		setModal(true);
+		setResizable(false);
 		setBounds(100, 100, 305, 224);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,12 +85,32 @@ public class crearEditarUsuario extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String nombre   = textField.getText().trim();
+		                String correo   = textField_1.getText().trim();
+		                String telefono = textField_2.getText().trim();
+		                
+		                if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
+		                	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+						Controladora control = Controladora.getInstance();
+						control.crearUsuario(nombre, telefono, correo);
+						dispose();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
