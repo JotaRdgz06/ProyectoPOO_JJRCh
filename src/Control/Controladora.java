@@ -243,15 +243,15 @@ public class Controladora implements Serializable {
     }
 	
 	public Integer obtenerSiguienteCodigoPrestamo() {
-        return codigoAutomaticoItem;
+        return codigoAutomaticoPrestamo;
     }
 	
 	public Integer obtenerSiguienteCodigoTipo() {
-        return codigoAutomaticoItem;
+        return codigoAutomaticoTipo;
     }
 	
 	public Integer obtenerSiguienteCodigoCategoria() {
-        return codigoAutomaticoItem;
+        return codigoAutomaticoCategoria;
     }
 	
 	public static void guardarDatos() throws IOException {
