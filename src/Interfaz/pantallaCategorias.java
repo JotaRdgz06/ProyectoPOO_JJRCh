@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
@@ -19,6 +20,8 @@ import Logica.Usuario;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class pantallaCategorias extends JDialog {
 
@@ -43,6 +46,12 @@ public class pantallaCategorias extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaCategorias() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarCategorias();
+			}
+		});
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,11 +101,21 @@ public class pantallaCategorias extends JDialog {
 		}
 		{
 			JButton btnNewButton_1 = new JButton("Editar");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					editarCategoria();
+				}
+			});
 			btnNewButton_1.setBounds(169, 202, 84, 20);
 			contentPanel.add(btnNewButton_1);
 		}
 		{
 			JButton btnNewButton_2 = new JButton("Borrar");
+			btnNewButton_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					borrarCategoria();
+				}
+			});
 			btnNewButton_2.setBounds(342, 202, 84, 20);
 			contentPanel.add(btnNewButton_2);
 		}
@@ -118,7 +137,7 @@ public class pantallaCategorias extends JDialog {
 		}
 	}
 	private void crearCategoria() {
-		crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
+		crearEditarCategoria ventanaDetalleCliente = new crearEditarCategoria();
 		ventanaDetalleCliente.setVisible(true);
 		cargarCategorias();
 	}
@@ -131,6 +150,45 @@ public class pantallaCategorias extends JDialog {
 		for (Categoria categoria: listaUsuarios) {
 			Object[] fila = new Object[] {categoria.getCodigo(), categoria.getNombre()};
 			model.addRow(fila);
+		}
+	}
+	
+	private void borrarCategoria() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Controladora control = Controladora.getInstance();
+			Categoria categoria= control.consultarCategoria().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará la categoria " + categoria.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				try {
+					control.borrarCategoria(categoria);
+					cargarCategorias();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
+	
+	private void editarCategoria() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Categoria categoria = Controladora.getInstance().consultarCategoria().get(numeroFila);
+			crearEditarCategoria ventana = new crearEditarCategoria(categoria);
+			ventana.setVisible(true); 
+			cargarCategorias();
+		}
+	}
+	
+	private void cargarDatos() {
+		try {
+			Controladora.cargarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
