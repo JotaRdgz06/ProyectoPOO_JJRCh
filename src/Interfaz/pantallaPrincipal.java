@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class pantallaPrincipal {
 
@@ -42,6 +44,7 @@ public class pantallaPrincipal {
 	 */
 	public pantallaPrincipal() {
 		initialize();
+		cargarDatos();
 	}
 
 	/**
@@ -49,6 +52,12 @@ public class pantallaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				guardarDatos();
+			}
+		});
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -99,6 +108,7 @@ public class pantallaPrincipal {
 	private void guardarDatos() {
 		try {
 			Controladora.guardarDatos();
+		} catch (java.io.FileNotFoundException e) {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frame, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
