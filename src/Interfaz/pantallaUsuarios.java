@@ -103,9 +103,7 @@ public class pantallaUsuarios extends JDialog {
 			JButton btnNewButton = new JButton("Crear");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
-					ventanaDetalleCliente.setVisible(true);
-					cargarUsuarios();
+					crearUsuario();
 				}
 			});
 			btnNewButton.setBounds(10, 191, 84, 20);
@@ -195,11 +193,17 @@ public class pantallaUsuarios extends JDialog {
 		if (numeroFila == -1) {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un cliente", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			crearEditarUsuario ventana = new crearEditarUsuario();
+			Usuario usuario = Controladora.getInstance().consultarUsuario().get(numeroFila);
+			crearEditarUsuario ventana = new crearEditarUsuario(usuario);
 			ventana.setVisible(true); 
 			cargarUsuarios();
 		}
+	}
+	
+	private void crearUsuario() {
+		crearEditarUsuario ventanaDetalleCliente = new crearEditarUsuario();
+		ventanaDetalleCliente.setVisible(true);
+		cargarUsuarios();
 	}
 	
 	private void cargarDatos() {
