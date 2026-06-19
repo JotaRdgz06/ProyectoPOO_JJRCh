@@ -5,19 +5,27 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import Control.Controladora;
+import Logica.Usuario;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class pantallaUsuarios extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -40,11 +48,17 @@ public class pantallaUsuarios extends JDialog {
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarUsuarios();
+			}
+		});
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JScrollPane scrollPane = new JScrollPane();
+			scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 10, 416, 154);
 			contentPanel.add(scrollPane);
 			{
@@ -103,6 +117,7 @@ public class pantallaUsuarios extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						guardarDatos();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -116,5 +131,31 @@ public class pantallaUsuarios extends JDialog {
 			}
 		}
 	}
-
+	
+	private void cargarUsuarios() {
+		Controladora control = Controladora.getInstance();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		List<Usuario> listaUsuarios = control.consultarUsuario();
+		for (Usuario usuario: listaUsuarios) {
+			Object[] fila = new Object[] {usuario.getNombre(), usuario.getCorreo(), usuario.getTelefono()};
+			model.addRow(fila);
+		}
+	}
+	
+	private void cargarDatos() {
+		try {
+			Controladora.cargarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void guardarDatos() {
+		try {
+			Controladora.guardarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
