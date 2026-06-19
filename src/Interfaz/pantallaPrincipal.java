@@ -121,6 +121,7 @@ public class pantallaPrincipal {
 	private void cargarDatos() {
 		try {
 			Controladora.cargarDatos();
+		} catch (java.io.FileNotFoundException e) {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frame, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -129,7 +130,6 @@ public class pantallaPrincipal {
 	private void guardarDatos() {
 		try {
 			Controladora.guardarDatos();
-		} catch (java.io.FileNotFoundException e) {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frame, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}

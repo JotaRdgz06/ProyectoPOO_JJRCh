@@ -125,12 +125,23 @@ public class pantallaCategorias extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						guardarDatos();
+						dispose();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -148,7 +159,7 @@ public class pantallaCategorias extends JDialog {
 		model.setRowCount(0);
 		List<Categoria> listaUsuarios = control.consultarCategoria();
 		for (Categoria categoria: listaUsuarios) {
-			Object[] fila = new Object[] {categoria.getCodigo(), categoria.getNombre()};
+			Object[] fila = new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre()};
 			model.addRow(fila);
 		}
 	}
@@ -166,7 +177,7 @@ public class pantallaCategorias extends JDialog {
 					control.borrarCategoria(categoria);
 					cargarCategorias();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar la categoria, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -189,6 +200,14 @@ public class pantallaCategorias extends JDialog {
 			Controladora.cargarDatos();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPanel, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void guardarDatos() {
+		try {
+			Controladora.guardarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

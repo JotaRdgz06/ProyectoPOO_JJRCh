@@ -35,6 +35,7 @@ public class Controladora implements Serializable {
 		usuarios = new ArrayList<>();
 		categorias = new ArrayList<>();
 		tipos = new ArrayList<>();
+		items = new ArrayList<>();
 		codigoAutomatico = 1;
 		tipoGenerico = new Tipo(0, "Generico", true);
 	}
@@ -114,6 +115,7 @@ public class Controladora implements Serializable {
 		for (Item i : items) {
 			i.eliminarCategoria(categoria);
 		}
+		categorias.remove(categoria);
 	}
 	
 	public List<Categoria> consultarCategoria() {
@@ -134,7 +136,7 @@ public class Controladora implements Serializable {
 	}
 	
 	public void borrarTipo(Tipo tipo) throws Exception {
-		if (tipo.puedeEliminarse())
+		if (!tipo.puedeEliminarse())
 			throw new Exception("No se pudo eliminar");
 		for (Item i : items) {
 			Tipo tipoItem = i.getTipo();
