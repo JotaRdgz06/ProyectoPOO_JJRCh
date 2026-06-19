@@ -87,17 +87,7 @@ public class crearEditarUsuario extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String nombre   = textField.getText().trim();
-		                String correo   = textField_1.getText().trim();
-		                String telefono = textField_2.getText().trim();
-		                
-		                if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
-		                	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-		                    return;
-		                }
-						Controladora control = Controladora.getInstance();
-						control.crearUsuario(nombre, telefono, correo);
-						dispose();
+						guardarUsuario();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -115,5 +105,29 @@ public class crearEditarUsuario extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void guardarUsuario() {
+		String nombre   = textField.getText().trim();
+        String correo   = textField_1.getText().trim();
+        String telefono = textField_2.getText().trim();
+        
+        if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
+        	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!correo.contains("@") || !correo.contains(".com.")) {
+            JOptionPane.showMessageDialog(contentPanel, "El email no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Integer.parseInt(telefono);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(contentPanel, "El telefono debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+		Controladora control = Controladora.getInstance();
+		control.crearUsuario(nombre, telefono, correo);
+		dispose();
 	}
 }
