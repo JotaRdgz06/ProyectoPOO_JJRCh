@@ -59,8 +59,15 @@ public class Item implements Serializable {
 		return categorias;
 	}
 	
-	public boolean estaPrestado() {
-		return prestado;
+	public String estaPrestado() {
+		String estaPrestadoS;
+		if (prestado) {
+			estaPrestadoS = "Prestado";
+			return estaPrestadoS;
+		} else {
+			estaPrestadoS = "No está prestado";
+			return estaPrestadoS;
+		}
 	}
 	
 	public void marcarComoPrestado() {
