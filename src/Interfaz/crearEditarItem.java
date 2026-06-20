@@ -134,6 +134,7 @@ public class crearEditarItem extends JDialog {
 		
 		list = new JList<>();
 		scrollPane.setViewportView(list);
+		list.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		lblNewLabel_3 = new JLabel("Categorias:");
 		lblNewLabel_3.setBounds(303, 8, 82, 12);
@@ -164,8 +165,8 @@ public class crearEditarItem extends JDialog {
 				buttonPane.add(cancelButton);
 				
 				if (item != null) {
-					lblNewLabel_1.setText(String.valueOf(item.getCodigo()));
 		            textField_1.setText(item.getNombre());
+		            textField.setText(seEstaEditando.getDescripcion());
 		        }
 			}
 		}
@@ -203,10 +204,10 @@ public class crearEditarItem extends JDialog {
 		Controladora control = Controladora.getInstance();
 		try {
 			if (seEstaEditando == null) {
-				control.crearItem(nombre, descripcion, tipo);
+				control.crearItem(nombre, descripcion, tipo, categorias);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
 			} else {
-				control.modificarItem(seEstaEditando, nombre, descripcion, tipo);
+				control.modificarItem(seEstaEditando, nombre, descripcion, tipo, categorias);
 				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
 			}
 			dispose();

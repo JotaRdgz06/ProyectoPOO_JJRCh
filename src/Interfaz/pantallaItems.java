@@ -19,6 +19,8 @@ import Logica.Item;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class pantallaItems extends JDialog {
 
@@ -43,6 +45,12 @@ public class pantallaItems extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaItems() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarItems();
+			}
+		});
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 561, 300);
@@ -116,37 +124,28 @@ public class pantallaItems extends JDialog {
 			contentPanel.add(btnNewButton_2);
 		}
 		{
-			JButton btnNewButton_3 = new JButton("Asignar categorias");
-			btnNewButton_3.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					agregarCategorias();
-				}
-			});
-			btnNewButton_3.setBounds(293, 190, 140, 20);
-			contentPanel.add(btnNewButton_3);
-		}
-		{
-			JButton btnNewButton_4 = new JButton("Asignar tipo");
-			btnNewButton_4.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					agregarTipo();
-				}
-			});
-			btnNewButton_4.setBounds(436, 190, 101, 20);
-			contentPanel.add(btnNewButton_4);
-		}
-		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						guardarDatos();
+						dispose();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -199,18 +198,6 @@ public class pantallaItems extends JDialog {
 			ventana.setVisible(true); 
 			cargarItems();
 		}
-	}
-	
-	private void agregarCategorias() {
-		pantallaCategorias ventanaDetalleCliente = new pantallaCategorias();
-		ventanaDetalleCliente.setVisible(true);
-		cargarItems();
-	}
-	
-	private void agregarTipo() {
-		pantallaTipos ventanaDetalleCliente = new pantallaTipos();
-		ventanaDetalleCliente.setVisible(true);
-		cargarItems();
 	}
 	
 	private void cargarDatos() {
