@@ -3,10 +3,12 @@ package Interfaz;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
 import Logica.Categoria;
@@ -17,9 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.ResourceBundle.Control;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class crearEditarItem extends JDialog {
 
@@ -32,6 +39,9 @@ public class crearEditarItem extends JDialog {
 	private JLabel nombre_1;
 	private JLabel lblDescripcin;
 	private JComboBox<Tipo> comboBox;
+	private JScrollPane scrollPane;
+	private JList<Categoria> list;
+	private JLabel lblNewLabel_3;
 
 	/**
 	 * Launch the application.
@@ -55,10 +65,16 @@ public class crearEditarItem extends JDialog {
 	}
 	
 	public crearEditarItem(Item item) {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarItems();
+			}
+		});
 		setModal(true);
 		setResizable(false);
 		this.seEstaEditando = item;
-		setBounds(100, 100, 305, 289);
+		setBounds(100, 100, 497, 289);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -82,7 +98,7 @@ public class crearEditarItem extends JDialog {
 		Controladora control = Controladora.getInstance();
         String textoCodigo;
         if (seEstaEditando == null) {
-            Integer siguienteCodigo = control.obtenerSiguienteCodigoCategoria();
+            Integer siguienteCodigo = control.obtenerSiguienteCodigoItem();
             textoCodigo = siguienteCodigo.toString();
         } else {
             textoCodigo = String.valueOf(item.getCodigo()).toString();
@@ -109,8 +125,19 @@ public class crearEditarItem extends JDialog {
 		comboBox = new JComboBox<>();
 		for (Tipo t : control.consultarTipo())
 			comboBox.addItem(t);
-		comboBox.setBounds(70, 171, 28, 20);
+		comboBox.setBounds(70, 171, 110, 20);
 		contentPanel.add(comboBox);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(305, 30, 168, 181);
+		contentPanel.add(scrollPane);
+		
+		list = new JList<>();
+		scrollPane.setViewportView(list);
+		
+		lblNewLabel_3 = new JLabel("Categorias:");
+		lblNewLabel_3.setBounds(303, 8, 82, 12);
+		contentPanel.add(lblNewLabel_3);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -144,16 +171,33 @@ public class crearEditarItem extends JDialog {
 		}
 	}
 	
+	private void cargarItems() {
+		Controladora control = Controladora.getInstance();
+		DefaultListModel<Categoria> model = new DefaultListModel<>();
+		List<Categoria> listaUsuarios = control.consultarCategoria();
+		
+		for (Categoria categoria: control.consultarCategoria()) {
+			model.addElement(categoria);
+		}
+		list.setModel(model);
+	}
+	
 	public void guardarItem() {
         String nombre = textField_1.getText().trim();
         String descripcion = textField.getText().trim();
         Tipo tipo = (Tipo) comboBox.getSelectedItem();
+        List<Categoria> categorias = list.getSelectedValuesList();
         
         if (tipo == null) {
         	JOptionPane.showMessageDialog(contentPanel, "Debe Seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
+        	return;
         }
         if (nombre.isEmpty()) {
         	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (descripcion.isEmpty()) {
+        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar una descripcion", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 		Controladora control = Controladora.getInstance();
