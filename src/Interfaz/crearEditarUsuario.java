@@ -130,8 +130,12 @@ public class crearEditarUsuario extends JDialog {
         	JOptionPane.showMessageDialog(contentPanel, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!correo.contains("@") || !correo.contains(".com")) {
-            JOptionPane.showMessageDialog(contentPanel, "El email no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!correo.contains("@")) {
+            JOptionPane.showMessageDialog(contentPanel, "El email no es válido, ingrese un @", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(!correo.contains(".com")) {
+        	JOptionPane.showMessageDialog(contentPanel, "El email no es válido, debe finalizar con .com", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {

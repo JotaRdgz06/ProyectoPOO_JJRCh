@@ -46,4 +46,9 @@ public class Categoria implements Serializable{
     public void eliminarItem(Item item) {
         items.remove(item);
     }
+    
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

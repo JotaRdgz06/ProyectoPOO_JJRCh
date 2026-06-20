@@ -53,18 +53,24 @@ public class Controladora implements Serializable {
         return instance;
     }
 	
-	public void crearItem(String nombre, String descripcion, Tipo tipo) throws Exception {
-		items.add(new Item(codigoAutomaticoItem, nombre, descripcion, tipo));
+	public void crearItem(String nombre, String descripcion, Tipo tipo, List<Categoria> categorias) throws Exception {
+		Item nuevoItem = new Item(codigoAutomaticoItem, nombre, descripcion, tipo);
+		for (Categoria categoria : categorias)
+			nuevoItem.agregarCategoria(categoria);
+		items.add(nuevoItem);
 		codigoAutomaticoItem++;
 	}
 	
-	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo) throws Exception {
+	public void modificarItem(Item item, String nombre, String descripcion, Tipo tipo, List<Categoria> categorias) throws Exception {
 		if (!items.contains(item)) {
 			throw new Exception("No se encontró el item");
 		} else {
 			item.setNombre(nombre);
 			item.setDescripcion(descripcion);
 			item.setTipo(tipo);
+			item.getCategorias();
+			for (Categoria categoria : categorias)
+				item.agregarCategoria(categoria);
 		}
     }
 	
