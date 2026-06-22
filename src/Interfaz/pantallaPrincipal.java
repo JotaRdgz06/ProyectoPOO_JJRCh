@@ -76,7 +76,7 @@ public class pantallaPrincipal {
 				guardarDatos();
 			}
 		});
-		frame.setBounds(100, 100, 450, 328);
+		frame.setBounds(100, 100, 450, 289);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -136,14 +136,6 @@ public class pantallaPrincipal {
 		lblNewLabel.setBounds(10, 10, 130, 12);
 		prestamo.add(lblNewLabel);
 		
-		JButton btnNewButton_3 = new JButton("Agregar Item");
-		btnNewButton_3.setBounds(10, 230, 116, 20);
-		prestamo.add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("Eliminar item");
-		btnNewButton_4.setBounds(144, 230, 124, 20);
-		prestamo.add(btnNewButton_4);
-		
 		JPanel administracion = new JPanel();
 		tabbedPane.addTab("Administración", null, administracion, null);
 		administracion.setLayout(null);
@@ -197,12 +189,9 @@ public class pantallaPrincipal {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		List<Prestamo> listaUsuarios = control.consultarPrestamo();
-		List<Item> items = control.consultarItem();
 		int cantItems = 0;
-		for (Item item : items)
-			cantItems += 1;
 		for (Prestamo prestamo: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), cantItems, prestamo.getFechaAlertaConFormato()};
+			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), prestamo.getItems().size(), prestamo.getFechaVencimientoConFormato()};
 			model.addRow(fila);
 		}
 	}
