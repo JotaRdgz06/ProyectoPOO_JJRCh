@@ -134,7 +134,6 @@ public class crearEditarItem extends JDialog {
 		
 		list = new JList<>();
 		scrollPane.setViewportView(list);
-		list.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		lblNewLabel_3 = new JLabel("Categorias:");
 		lblNewLabel_3.setBounds(303, 8, 82, 12);
@@ -190,7 +189,7 @@ public class crearEditarItem extends JDialog {
         List<Categoria> categorias = list.getSelectedValuesList();
         
         if (tipo == null) {
-        	JOptionPane.showMessageDialog(contentPanel, "Debe Seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
+        	JOptionPane.showMessageDialog(contentPanel, "Debe Seleccionar un tipo", "Error", JOptionPane.ERROR_MESSAGE);
         	return;
         }
         if (nombre.isEmpty()) {

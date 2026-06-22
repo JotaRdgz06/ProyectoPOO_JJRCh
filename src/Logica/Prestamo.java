@@ -2,6 +2,7 @@ package Logica;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +87,10 @@ public class Prestamo implements Serializable {
 	
 	public LocalDateTime getFechaCreacion() {
 	    return fechaCreacion;
+	}
+	
+	public String getFechaAlertaConFormato() {
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	    return alerta.getFechaActivacion().format(formatter);
 	}
 }
