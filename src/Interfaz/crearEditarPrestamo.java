@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import Control.Controladora;
 import Logica.Categoria;
+import Logica.Item;
 import Logica.Prestamo;
 import Logica.Tipo;
 import Logica.Usuario;
@@ -18,11 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class crearEditarPrestamo extends JDialog {
 
@@ -57,6 +61,12 @@ public class crearEditarPrestamo extends JDialog {
 	}
 	
 	public crearEditarPrestamo(Prestamo prestamo) {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarItems();
+			}
+		});
 		setModal(true);
 		setResizable(false);
 		this.seEstaEditando = prestamo;
@@ -149,6 +159,12 @@ public class crearEditarPrestamo extends JDialog {
 		contentPanel.add(lblNewLabel_4);
 		
 		JButton btnNewButton = new JButton("Agregar item");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agregarItem();
+				
+			}
+		});
 		btnNewButton.setBounds(222, 150, 116, 20);
 		contentPanel.add(btnNewButton);
 		
@@ -202,5 +218,22 @@ public class crearEditarPrestamo extends JDialog {
 		} catch (Exception e) {
             JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+	}
+	
+	public void agregarItem() {
+		pantallaItems ventanaDetalleCliente = new pantallaItems();
+		ventanaDetalleCliente.setVisible(true);
+		cargarItems();
+	}
+	
+	private void cargarItems() {
+		Controladora control = Controladora.getInstance();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		List<Item> listaUsuarios = control.consultarItem();
+		for (Item item: listaUsuarios) {
+			Object[] fila = new Object[] {String.valueOf(item.getNombre())};
+			model.addRow(fila);
+		}
 	}
 }
