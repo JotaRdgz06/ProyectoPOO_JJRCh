@@ -24,6 +24,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JLabel;
 
 public class pantallaPrincipal {
 
@@ -73,12 +74,12 @@ public class pantallaPrincipal {
 				guardarDatos();
 			}
 		});
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 328);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 436, 263);
+		tabbedPane.setBounds(0, 0, 436, 291);
 		frame.getContentPane().add(tabbedPane);
 		
 		JPanel prestamo = new JPanel();
@@ -86,11 +87,11 @@ public class pantallaPrincipal {
 		prestamo.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Crear prestamo");
-		btnNewButton_1.setBounds(291, 206, 130, 20);
+		btnNewButton_1.setBounds(10, 200, 130, 20);
 		prestamo.add(btnNewButton_1);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 411, 180);
+		scrollPane.setBounds(10, 28, 411, 162);
 		prestamo.add(scrollPane);
 		
 		table = new JTable();
@@ -98,7 +99,7 @@ public class pantallaPrincipal {
 			new Object[][] {
 			},
 			new String[] {
-				"C\u00F3digo", "Nombre", "Tipo", "Fecha finalizaci\u00F3n"
+				"C\u00F3digo", "Prestado a", "Cant. de items", "Fecha finalizaci\u00F3n"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
@@ -107,14 +108,9 @@ public class pantallaPrincipal {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(48);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
@@ -126,8 +122,20 @@ public class pantallaPrincipal {
 				borrarPrestamo();
 			}
 		});
-		btnNewButton_2.setBounds(10, 206, 137, 20);
+		btnNewButton_2.setBounds(144, 200, 151, 20);
 		prestamo.add(btnNewButton_2);
+		
+		JLabel lblNewLabel = new JLabel("Prestamos activos:");
+		lblNewLabel.setBounds(10, 10, 130, 12);
+		prestamo.add(lblNewLabel);
+		
+		JButton btnNewButton_3 = new JButton("Agregar Item");
+		btnNewButton_3.setBounds(10, 230, 116, 20);
+		prestamo.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("Eliminar item");
+		btnNewButton_4.setBounds(144, 230, 124, 20);
+		prestamo.add(btnNewButton_4);
 		
 		JPanel administracion = new JPanel();
 		tabbedPane.addTab("Administración", null, administracion, null);
@@ -182,8 +190,12 @@ public class pantallaPrincipal {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		List<Prestamo> listaUsuarios = control.consultarPrestamo();
+		List<Item> items = control.consultarItem();
+		int cantItems = 0;
+		for (Item item : items)
+			cantItems += 1;
 		for (Prestamo prestamo: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario(), prestamo.getTipo(), prestamo.getAlerta()};
+			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), cantItems, prestamo.getFechaAlertaConFormato()};
 			model.addRow(fila);
 		}
 	}
@@ -195,7 +207,7 @@ public class pantallaPrincipal {
 		} else {
 			Controladora control = Controladora.getInstance();
 			Prestamo prestamo = control.consultarPrestamo().get(numeroFila);
-			int respuesta = JOptionPane.showConfirmDialog(frame, "Se finalizará el prestamo " + prestamo.getCodigo() + " del usuario " + prestamo.getUsuario(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			int respuesta = JOptionPane.showConfirmDialog(frame, "Se finalizará el prestamo " + prestamo.getCodigo() + " del usuario " + prestamo.getUsuario().getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
 					control.finalizarPrestamo(prestamo);
