@@ -12,10 +12,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Logica.Categoria;
 import Logica.Item;
 import Logica.Prestamo;
 
 import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

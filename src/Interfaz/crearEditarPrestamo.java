@@ -27,7 +27,7 @@ public class crearEditarPrestamo extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private Prestamo seEstaEditando;
 	private JLabel lblNewLabel_1;
-	private JComboBox comboBox;
+	private JComboBox<Usuario> comboBox;
 
 	/**
 	 * Launch the application.
@@ -84,7 +84,7 @@ public class crearEditarPrestamo extends JDialog {
 		
 		comboBox = new JComboBox<>();
 		for (Usuario u : control.consultarUsuario())
-			comboBox.addItem(u.toString());
+			comboBox.addItem(u);
 		comboBox.setBounds(65, 69, 88, 20);
 		contentPanel.add(comboBox);
 		{
