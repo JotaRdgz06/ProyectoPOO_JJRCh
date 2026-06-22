@@ -8,11 +8,13 @@ public class Prestamo implements Serializable {
 	private int codigo;
     private Usuario usuario;
     private List<Item> items;
+    private Tipo tipo;
     private Alerta alerta;
     
 	public Prestamo(int codigo, Usuario usuario) {
 		this.codigo = codigo;
 		this.usuario = usuario;
+		this.tipo = tipo;
 		this.items = new ArrayList<>();
 		this.alerta = null;
 	}
@@ -43,6 +45,14 @@ public class Prestamo implements Serializable {
 
 	public List<Item> getItems() {
 		return items;
+	}
+	
+	public Tipo getTipo() {
+		return tipo;
+	}
+	
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
     
 	public void agregarItem(Item item) {
