@@ -169,6 +169,11 @@ public class crearEditarPrestamo extends JDialog {
 		contentPanel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Borrar item");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarItem();
+			}
+		});
 		btnNewButton_1.setBounds(348, 150, 104, 20);
 		contentPanel.add(btnNewButton_1);
 		{
@@ -224,6 +229,25 @@ public class crearEditarPrestamo extends JDialog {
 		pantallaItems ventanaDetalleCliente = new pantallaItems();
 		ventanaDetalleCliente.setVisible(true);
 		cargarItems();
+	}
+	
+	private void borrarItem() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Controladora control = Controladora.getInstance();
+			Item item= control.consultarItem().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará el item " + item.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				try {
+					control.borrarItem(item);
+					cargarItems();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPanel, "Error al borrar el item, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 	
 	private void cargarItems() {
