@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Logica.Item;
 import Logica.Prestamo;
 
 import javax.swing.JScrollPane;
@@ -174,6 +175,36 @@ public class pantallaPrincipal {
 		
 		JPanel reportes = new JPanel();
 		tabbedPane.addTab("Reportes", null, reportes, null);
+	}
+	
+	private void cargarPrestamos() {
+		Controladora control = Controladora.getInstance();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		List<Prestamo> listaUsuarios = control.consultarPrestamo();
+		for (Prestamo prestamo: listaUsuarios) {
+			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario(), prestamo.getTipo(), prestamo.getAlerta()};
+			model.addRow(fila);
+		}
+	}
+	
+	private void borrarPrestamo() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(frame, "Debe seleccionar un prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Controladora control = Controladora.getInstance();
+			Prestamo prestamo = control.consultarPrestamo().get(numeroFila);
+			int respuesta = JOptionPane.showConfirmDialog(frame, "Se finalizará el prestamo " + prestamo.getCodigo() + " del usuario " + prestamo.getUsuario(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				try {
+					control.finalizarPrestamo(prestamo);
+					cargarPrestamos();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(frame, "Error al finalizar el prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 	
 	private void cargarDatos() {
