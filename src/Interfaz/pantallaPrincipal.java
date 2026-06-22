@@ -9,8 +9,10 @@ import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Logica.Prestamo;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -18,10 +20,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class pantallaPrincipal {
 
 	private JFrame frame;
+	private JTable table;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -52,6 +59,12 @@ public class pantallaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent e) {
+				cargarPrestamos();
+			}
+		});
 		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -69,6 +82,51 @@ public class pantallaPrincipal {
 		
 		JPanel prestamo = new JPanel();
 		tabbedPane.addTab("Prestamo", null, prestamo, null);
+		prestamo.setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("Crear prestamo");
+		btnNewButton_1.setBounds(291, 206, 130, 20);
+		prestamo.add(btnNewButton_1);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 411, 180);
+		prestamo.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00F3digo", "Nombre", "Tipo", "Fecha finalizaci\u00F3n"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton_2 = new JButton("Finalizar prestamo");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarPrestamo();
+			}
+		});
+		btnNewButton_2.setBounds(10, 206, 137, 20);
+		prestamo.add(btnNewButton_2);
 		
 		JPanel administracion = new JPanel();
 		tabbedPane.addTab("Administración", null, administracion, null);
