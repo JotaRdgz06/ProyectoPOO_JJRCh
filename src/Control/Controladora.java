@@ -199,6 +199,10 @@ public class Controladora implements Serializable {
         prestamos.remove(prestamo);
     }
 	
+	public List<Prestamo> consultarPrestamo() {
+		return prestamos;
+	}
+	
 	 public void agregarAlertaPrestamo(Prestamo prestamo, Alerta alerta) {
 	        prestamo.setAlerta(alerta);
 	    }
