@@ -87,6 +87,11 @@ public class pantallaPrincipal {
 		prestamo.setLayout(null);
 		
 		JButton btnNewButton_1 = new JButton("Crear prestamo");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearPrestamo();
+			}
+		});
 		btnNewButton_1.setBounds(10, 200, 130, 20);
 		prestamo.add(btnNewButton_1);
 		
@@ -198,6 +203,12 @@ public class pantallaPrincipal {
 			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), cantItems, prestamo.getFechaAlertaConFormato()};
 			model.addRow(fila);
 		}
+	}
+	
+	private void crearPrestamo() {
+		crearEditarPrestamo ventanaDetalleCliente = new crearEditarPrestamo();
+		ventanaDetalleCliente.setVisible(true);
+		cargarPrestamos();
 	}
 	
 	private void borrarPrestamo() {
