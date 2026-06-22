@@ -20,6 +20,9 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class crearEditarPrestamo extends JDialog {
 
@@ -28,6 +31,9 @@ public class crearEditarPrestamo extends JDialog {
 	private Prestamo seEstaEditando;
 	private JLabel lblNewLabel_1;
 	private JComboBox<Usuario> comboBox;
+	private JTable table;
+	private JComboBox comboBox_1;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -87,6 +93,68 @@ public class crearEditarPrestamo extends JDialog {
 			comboBox.addItem(u);
 		comboBox.setBounds(65, 69, 88, 20);
 		contentPanel.add(comboBox);
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(195, 15, 257, 125);
+			contentPanel.add(scrollPane);
+			{
+				table = new JTable();
+				table.setModel(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"Items agregados:"
+					}
+				) {
+					Class[] columnTypes = new Class[] {
+						String.class
+					};
+					public Class getColumnClass(int columnIndex) {
+						return columnTypes[columnIndex];
+					}
+					boolean[] columnEditables = new boolean[] {
+						false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+				table.getColumnModel().getColumn(0).setResizable(false);
+				scrollPane.setViewportView(table);
+			}
+		}
+		{
+			JLabel lblNewLabel_2 = new JLabel("Alerta");
+			lblNewLabel_2.setBounds(10, 122, 50, 12);
+			contentPanel.add(lblNewLabel_2);
+		}
+		{
+			comboBox_1 = new JComboBox();
+			comboBox_1.setBounds(65, 120, 88, 20);
+			contentPanel.add(comboBox_1);
+		}
+		{
+			JLabel lblNewLabel_3 = new JLabel("Activar en:");
+			lblNewLabel_3.setBounds(10, 168, 69, 22);
+			contentPanel.add(lblNewLabel_3);
+		}
+		
+		textField = new JTextField();
+		textField.setBounds(70, 170, 96, 18);
+		contentPanel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("minutos");
+		lblNewLabel_4.setBounds(176, 173, 50, 12);
+		contentPanel.add(lblNewLabel_4);
+		
+		JButton btnNewButton = new JButton("Agregar item");
+		btnNewButton.setBounds(222, 150, 116, 20);
+		contentPanel.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Borrar item");
+		btnNewButton_1.setBounds(348, 150, 104, 20);
+		contentPanel.add(btnNewButton_1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
