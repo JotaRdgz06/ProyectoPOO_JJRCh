@@ -1,6 +1,7 @@
 package Logica;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Prestamo implements Serializable {
     private List<Item> items;
     private Tipo tipo;
     private Alerta alerta;
+    private LocalDateTime fechaCreacion;
     
 	public Prestamo(int codigo, Usuario usuario) {
 		this.codigo = codigo;
@@ -17,6 +19,7 @@ public class Prestamo implements Serializable {
 		this.tipo = tipo;
 		this.items = new ArrayList<>();
 		this.alerta = null;
+		this.fechaCreacion = LocalDateTime.now();
 	}
 
 	public int getCodigo() {
@@ -80,4 +83,8 @@ public class Prestamo implements Serializable {
 	public boolean estaVacio() {
         return items.isEmpty();
     }
+	
+	public LocalDateTime getFechaCreacion() {
+	    return fechaCreacion;
+	}
 }
