@@ -109,7 +109,7 @@ public class crearEditarItem extends JDialog {
 		contentPanel.add(lblNewLabel_1);
 		
 		lblDescripcin = new JLabel("Descripción");
-		lblDescripcin.setBounds(10, 119, 66, 24);
+		lblDescripcin.setBounds(10, 119, 91, 24);
 		contentPanel.add(lblDescripcin);
 		
 		textField = new JTextField();

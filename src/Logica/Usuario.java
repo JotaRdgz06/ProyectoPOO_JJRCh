@@ -56,4 +56,9 @@ public class Usuario implements Serializable {
 	public boolean puedeEliminarse() {
         return prestamos.isEmpty();
     }
+	
+	@Override
+    public String toString() {
+        return nombre;
+    }
 }
