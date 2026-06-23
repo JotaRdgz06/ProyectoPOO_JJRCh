@@ -200,6 +200,10 @@ public class crearEditarItem extends JDialog {
         	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar una descripcion", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (categorias.isEmpty()) {
+        	JOptionPane.showMessageDialog(contentPanel, "Debe ingresar al menos una categoria", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 		Controladora control = Controladora.getInstance();
 		try {
 			if (seEstaEditando == null) {

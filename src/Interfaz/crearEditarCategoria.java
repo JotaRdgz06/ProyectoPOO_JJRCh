@@ -127,10 +127,10 @@ public class crearEditarCategoria extends JDialog {
 		try {
 			if (seEstaEditando == null) {
 				control.crearCategoria(nombre);
-				JOptionPane.showMessageDialog(contentPanel, "Se ha creado el usuario");
+				JOptionPane.showMessageDialog(contentPanel, "Se ha creado la categoria");
 			} else {
 				control.modificarCategoria(seEstaEditando, nombre);
-				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado el usuario");
+				JOptionPane.showMessageDialog(contentPanel, "Se ha modificado la categoria");
 			}
 			dispose();
 		} catch (Exception e) {

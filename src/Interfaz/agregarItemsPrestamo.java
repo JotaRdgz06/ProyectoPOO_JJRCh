@@ -90,7 +90,6 @@ public class agregarItemsPrestamo extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						seleccionarItem();
-						guardarDatos();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -137,7 +136,6 @@ public class agregarItemsPrestamo extends JDialog {
 	            }
 	        }
 	        itemSeleccionado = itemsDisponibles.get(numeroFila);
-	        itemSeleccionado.marcarComoPrestado();
 	        dispose();
 	    }
 	}
