@@ -15,6 +15,7 @@ import Logica.Item;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -68,24 +69,17 @@ public class agregarItemsPrestamo extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Item", "Prestado"
+				"Item"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, String.class
+				String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-				true, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
 		scrollPane.setViewportView(table);
 		{
 			JPanel buttonPane = new JPanel();
@@ -123,7 +117,7 @@ public class agregarItemsPrestamo extends JDialog {
 		List<Item> listaUsuarios = control.consultarItem();
 		for (Item item: listaUsuarios) {
 			if (!item.estaPrestado()) {
-				Object[] fila = new Object[] {String.valueOf(item.getNombre()), item.estaPrestadoS()};
+				Object[] fila = new Object[] {String.valueOf(item.getNombre())};
 				model.addRow(fila);
 			}
 		}
@@ -134,8 +128,14 @@ public class agregarItemsPrestamo extends JDialog {
 	    if (numeroFila == -1) {
 	        JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
 	    } else {
-	        List<Item> itemsDisponibles = Controladora.getInstance().consultarItem().stream().filter(i -> !i.estaPrestado()).collect(java.util.stream.Collectors.toList());
-	        
+	    	Controladora control = Controladora.getInstance();
+	    	List<Item> todosLosItems = control.consultarItem();
+	    	List<Item> itemsDisponibles = new ArrayList<>();
+	        for (Item item : todosLosItems) {
+	            if (!item.estaPrestado()) {
+	                itemsDisponibles.add(item);
+	            }
+	        }
 	        itemSeleccionado = itemsDisponibles.get(numeroFila);
 	        itemSeleccionado.marcarComoPrestado();
 	        dispose();
