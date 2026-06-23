@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -38,6 +39,7 @@ public class crearEditarPrestamo extends JDialog {
 	private JTable table;
 	private JComboBox comboBox_1;
 	private JTextField textField;
+	private List<Item> itemsAgregados = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -194,6 +196,9 @@ public class crearEditarPrestamo extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						for (Item item : itemsAgregados) {
+				            item.marcarComoLibre();
+				        }
 						dispose();
 					}
 				});
@@ -214,10 +219,19 @@ public class crearEditarPrestamo extends JDialog {
         	JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-		try {
-			JOptionPane.showMessageDialog(contentPanel, "Se ha creado prestamo");
-			dispose();
-		} catch (Exception e) {
+        if (itemsAgregados.isEmpty()) {
+            JOptionPane.showMessageDialog(contentPanel, "Debe agregar al menos un item", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Controladora control = Controladora.getInstance();
+            Prestamo nuevoPrestamo = control.crearPrestamo(usuario);
+            for (Item item : itemsAgregados) {
+                nuevoPrestamo.agregarItem(item);
+            }
+            JOptionPane.showMessageDialog(contentPanel, "Se ha creado el prestamo");
+            dispose();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 	}
@@ -228,6 +242,8 @@ public class crearEditarPrestamo extends JDialog {
 	    Item itemElegido = ventana.getItemSeleccionado();
 	    if (itemElegido != null) {
 	        try {
+	        	itemElegido.marcarComoPrestado();
+	        	itemsAgregados.add(itemElegido);
 	            DefaultTableModel model = (DefaultTableModel) table.getModel();
 	            model.addRow(new Object[]{itemElegido.getNombre()});
 	        } catch (Exception e) {
@@ -246,7 +262,10 @@ public class crearEditarPrestamo extends JDialog {
 			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará el item " + item.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
-					control.borrarItem(item);
+					Item itemBorrar = itemsAgregados.get(numeroFila);
+					itemBorrar.marcarComoLibre();
+					itemsAgregados.remove(numeroFila);
+					((DefaultTableModel) table.getModel()).removeRow(numeroFila);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(contentPanel, "Error al borrar el item, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
