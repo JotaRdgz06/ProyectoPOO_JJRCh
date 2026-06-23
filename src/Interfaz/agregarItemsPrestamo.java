@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -17,12 +18,15 @@ import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class agregarItemsPrestamo extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	private Item itemSeleccionado;
 
 	/**
 	 * Launch the application.
@@ -41,20 +45,22 @@ public class agregarItemsPrestamo extends JDialog {
 	 * Create the dialog.
 	 */
 	public agregarItemsPrestamo() {
+		setResizable(false);
+		setModal(true);
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				cargarItems();
 			}
 		});
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 396, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 416, 199);
+		scrollPane.setBounds(10, 10, 362, 199);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -62,23 +68,24 @@ public class agregarItemsPrestamo extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Item"
+				"Item", "Prestado"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class
+				String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				false
+				true, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
 		scrollPane.setViewportView(table);
 		{
 			JPanel buttonPane = new JPanel();
@@ -86,12 +93,23 @@ public class agregarItemsPrestamo extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						seleccionarItem();
+						guardarDatos();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -104,8 +122,43 @@ public class agregarItemsPrestamo extends JDialog {
 		model.setRowCount(0);
 		List<Item> listaUsuarios = control.consultarItem();
 		for (Item item: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(item.getCodigo()), item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS()};
-			model.addRow(fila);
+			if (!item.estaPrestado()) {
+				Object[] fila = new Object[] {String.valueOf(item.getNombre()), item.estaPrestadoS()};
+				model.addRow(fila);
+			}
+		}
+	}
+	
+	private void seleccionarItem() {
+	    int numeroFila = table.getSelectedRow();
+	    if (numeroFila == -1) {
+	        JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
+	    } else {
+	        List<Item> itemsDisponibles = Controladora.getInstance().consultarItem().stream().filter(i -> !i.estaPrestado()).collect(java.util.stream.Collectors.toList());
+	        
+	        itemSeleccionado = itemsDisponibles.get(numeroFila);
+	        itemSeleccionado.marcarComoPrestado();
+	        dispose();
+	    }
+	}
+	
+	public Item getItemSeleccionado() {
+	    return itemSeleccionado;
+	}
+	
+	private void cargarDatos() {
+		try {
+			Controladora.cargarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void guardarDatos() {
+		try {
+			Controladora.guardarDatos();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
