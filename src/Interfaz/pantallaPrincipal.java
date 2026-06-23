@@ -12,6 +12,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Logica.Alerta;
+import Logica.Alerta.TipoAlerta;
 import Logica.Categoria;
 import Logica.Item;
 import Logica.Prestamo;
@@ -106,7 +108,7 @@ public class pantallaPrincipal {
 			new Object[][] {
 			},
 			new String[] {
-				"C\u00F3digo", "Prestado a", "Cant. de items", "Fecha finalizaci\u00F3n"
+				"C\u00F3digo", "Prestado a", "Cant. de items", "Alerta"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
@@ -114,6 +116,12 @@ public class pantallaPrincipal {
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				true, true, true, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
@@ -189,9 +197,10 @@ public class pantallaPrincipal {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		List<Prestamo> listaUsuarios = control.consultarPrestamo();
-		int cantItems = 0;
+		String tieneAlerta;
+		
 		for (Prestamo prestamo: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), prestamo.getItems().size(), prestamo.getFechaVencimientoConFormato()};
+			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), prestamo.getItems().size(), prestamo.getDescripcionAlerta()};
 			model.addRow(fila);
 		}
 	}
