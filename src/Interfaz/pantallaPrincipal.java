@@ -197,7 +197,6 @@ public class pantallaPrincipal {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		List<Prestamo> listaUsuarios = control.consultarPrestamo();
-		String tieneAlerta;
 		
 		for (Prestamo prestamo: listaUsuarios) {
 			Object[] fila = new Object[] {String.valueOf(prestamo.getCodigo()), prestamo.getUsuario().getNombre(), prestamo.getItems().size(), prestamo.getDescripcionAlerta()};

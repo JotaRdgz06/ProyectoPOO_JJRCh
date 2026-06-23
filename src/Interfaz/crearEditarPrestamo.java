@@ -64,7 +64,6 @@ public class crearEditarPrestamo extends JDialog {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				cargarItems();
 			}
 		});
 		setModal(true);
@@ -224,9 +223,17 @@ public class crearEditarPrestamo extends JDialog {
 	}
 	
 	public void agregarItem() {
-		pantallaItems ventanaDetalleCliente = new pantallaItems();
-		ventanaDetalleCliente.setVisible(true);
-		cargarItems();
+		agregarItemsPrestamo ventana = new agregarItemsPrestamo();
+		ventana.setVisible(true);
+	    Item itemElegido = ventana.getItemSeleccionado();
+	    if (itemElegido != null) {
+	        try {
+	            DefaultTableModel model = (DefaultTableModel) table.getModel();
+	            model.addRow(new Object[]{itemElegido.getNombre()});
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+	        }
+	    }
 	}
 	
 	private void borrarItem() {
@@ -240,22 +247,10 @@ public class crearEditarPrestamo extends JDialog {
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
 					control.borrarItem(item);
-					cargarItems();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(contentPanel, "Error al borrar el item, " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}
-	}
-	
-	private void cargarItems() {
-		Controladora control = Controladora.getInstance();
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		List<Item> listaUsuarios = control.consultarItem();
-		for (Item item: listaUsuarios) {
-			Object[] fila = new Object[] {String.valueOf(item.getNombre())};
-			model.addRow(fila);
 		}
 	}
 }
