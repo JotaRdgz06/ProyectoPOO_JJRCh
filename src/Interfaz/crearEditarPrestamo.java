@@ -139,7 +139,7 @@ public class crearEditarPrestamo extends JDialog {
 			contentPanel.add(lblNewLabel_2);
 		}
 		{
-			comboBox_1 = new JComboBox();
+			comboBox_1 = new JComboBox<>(new String[]{"Sin alerta", "Una vez", "Repetido"});
 			comboBox_1.setBounds(65, 120, 88, 20);
 			contentPanel.add(comboBox_1);
 		}
@@ -215,9 +215,7 @@ public class crearEditarPrestamo extends JDialog {
         	JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-		Controladora control = Controladora.getInstance();
 		try {
-			
 			JOptionPane.showMessageDialog(contentPanel, "Se ha creado prestamo");
 			dispose();
 		} catch (Exception e) {

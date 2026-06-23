@@ -10,7 +10,7 @@ public class Alerta implements Serializable {
     private String mensaje;
 
     public enum TipoAlerta {
-		UNA_VEZ, RECURRENTE
+		SIN_ALERTA, UNA_VEZ, RECURRENTE
 	}
     
     public Alerta(TipoAlerta tipo, LocalDateTime fechaActivacion, String mensaje) {
