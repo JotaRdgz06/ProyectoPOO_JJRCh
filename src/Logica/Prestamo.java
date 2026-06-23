@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logica.Alerta.TipoAlerta;
+
 public class Prestamo implements Serializable {
 	private int codigo;
     private Usuario usuario;
@@ -107,5 +109,16 @@ public class Prestamo implements Serializable {
 	    }
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	    return fechaVencimiento.format(formatter);
+	}
+	
+	public String getDescripcionAlerta() {
+	    if (alerta == null) {
+	        return "Sin alerta";
+	    }
+	    else if (alerta.getTipo() == TipoAlerta.UNA_VEZ) {
+	    	return "Una vez";
+	    } else {
+	    	return "Repetido";
+	    }
 	}
 }
