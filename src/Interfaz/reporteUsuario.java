@@ -42,6 +42,7 @@ public class reporteUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public reporteUsuario() {
+		setTitle("Reporte usuario");
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
