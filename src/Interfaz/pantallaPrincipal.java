@@ -77,6 +77,10 @@ public class pantallaPrincipal {
 			public void windowClosing(WindowEvent e) {
 				guardarDatos();
 			}
+			@Override
+			public void windowOpened(WindowEvent e) {
+				verificarAlerta();
+			}
 		});
 		frame.setBounds(100, 100, 450, 289);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,6 +228,20 @@ public class pantallaPrincipal {
 					cargarPrestamos();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(frame, "Error al finalizar el prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
+	
+	private void verificarAlerta() {
+		Controladora control = Controladora.getInstance();
+		List<Prestamo> prestamos = control.consultarPrestamo();
+		
+		for (Prestamo prestamo : prestamos) {
+			if (prestamo.tieneAlerta()) {
+				Alerta alerta = prestamo.getAlerta();
+				if (alerta.debeActivarse()) {
+					JOptionPane.showMessageDialog(frame, "Atención: el prestamo del usuario" + prestamo.getUsuario() + "ha finalizado", "Alerta de prestamo", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
