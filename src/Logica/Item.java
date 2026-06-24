@@ -68,7 +68,7 @@ public class Item implements Serializable {
 			estaPrestadoS = "Prestado";
 			return estaPrestadoS;
 		} else {
-			estaPrestadoS = "No está prestado";
+			estaPrestadoS = "Disponible";
 			return estaPrestadoS;
 		}
 	}

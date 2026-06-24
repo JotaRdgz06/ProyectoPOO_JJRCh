@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Control.Controladora;
+import Logica.Alerta;
 import Logica.Categoria;
 import Logica.Item;
 import Logica.Prestamo;
@@ -26,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -40,6 +42,7 @@ public class crearEditarPrestamo extends JDialog {
 	private JComboBox comboBox_1;
 	private JTextField textField;
 	private List<Item> itemsAgregados = new ArrayList<>();
+	private JLabel lblNewLabel_4;
 
 	/**
 	 * Launch the application.
@@ -141,6 +144,16 @@ public class crearEditarPrestamo extends JDialog {
 		}
 		{
 			comboBox_1 = new JComboBox<>(new String[]{"Sin alerta", "Una vez", "Repetido"});
+			comboBox_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String alertaSeleccionada = (String) comboBox_1.getSelectedItem();
+					if (alertaSeleccionada.equals("Sin alerta")) {
+			            lblNewLabel_4.setText("minutos (ignorado)");
+			        } else {
+			            lblNewLabel_4.setText("minutos");
+			        }
+				}
+			});
 			comboBox_1.setBounds(65, 120, 88, 20);
 			contentPanel.add(comboBox_1);
 		}
@@ -155,8 +168,8 @@ public class crearEditarPrestamo extends JDialog {
 		contentPanel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_4 = new JLabel("minutos");
-		lblNewLabel_4.setBounds(176, 173, 50, 12);
+		lblNewLabel_4 = new JLabel("minutos");
+		lblNewLabel_4.setBounds(176, 173, 162, 12);
 		contentPanel.add(lblNewLabel_4);
 		
 		JButton btnNewButton = new JButton("Agregar item");
@@ -210,6 +223,7 @@ public class crearEditarPrestamo extends JDialog {
 		        }
 			}
 		}
+		comboBox_1.setSelectedIndex(0);
 	}
 	
 	public void guardarPrestamo() {
@@ -222,6 +236,12 @@ public class crearEditarPrestamo extends JDialog {
         if (itemsAgregados.isEmpty()) {
             JOptionPane.showMessageDialog(contentPanel, "Debe agregar al menos un item", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        
+        String tipoAlertaSeleccionado = (String) comboBox_1.getSelectedItem();
+        
+        if (tipoAlertaSeleccionado.equals("Sin alerta")) {
+        	lblNewLabel_4.setText("minutos (si ingresa algo será ignorado)");
         }
         try {
             Controladora control = Controladora.getInstance();
