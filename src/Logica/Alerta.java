@@ -8,6 +8,7 @@ public class Alerta implements Serializable {
 	private TipoAlerta tipo;
     private LocalDateTime fechaActivacion;
     private String mensaje;
+    private boolean yaActivada;
 
     public enum TipoAlerta {
 		SIN_ALERTA, UNA_VEZ, RECURRENTE
@@ -17,6 +18,7 @@ public class Alerta implements Serializable {
         this.tipo = tipo;
         this.fechaActivacion = fechaActivacion;
         this.mensaje = mensaje;
+        yaActivada = false;
     }
 	
     public TipoAlerta getTipo() {
@@ -44,6 +46,9 @@ public class Alerta implements Serializable {
 	}
 
 	public boolean debeActivarse() {
-        return LocalDateTime.now().isAfter(fechaActivacion);
+        if (LocalDateTime.now().isAfter(fechaActivacion))
+        	return true;
+        if (tipo == Alerta.TipoAlerta.UNA_VEZ && yaActivada == true)
+        	return false;
     }
 }

@@ -241,7 +241,7 @@ public class pantallaPrincipal {
 			if (prestamo.tieneAlerta()) {
 				Alerta alerta = prestamo.getAlerta();
 				if (alerta.debeActivarse()) {
-					JOptionPane.showMessageDialog(frame, "Atención: el prestamo del usuario" + prestamo.getUsuario() + "ha finalizado", "Alerta de prestamo", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Atención: el prestamo del usuario " + prestamo.getUsuario() + " ha finalizado", "Alerta de prestamo", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
