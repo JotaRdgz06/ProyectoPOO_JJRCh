@@ -92,23 +92,8 @@ public class Prestamo implements Serializable {
 	    return fechaCreacion;
 	}
 	
-	public String getFechaAlertaConFormato() {
-		if (alerta == null)
-			return "Sin alerta";
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-	    return alerta.getFechaActivacion().format(formatter);
-	}
-	
 	public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
 	    this.fechaVencimiento = fechaVencimiento;
-	}
-	
-	public String getFechaVencimientoConFormato() {
-	    if (fechaVencimiento == null) {
-	        return "Sin fecha límite";
-	    }
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-	    return fechaVencimiento.format(formatter);
 	}
 	
 	public String getDescripcionAlerta() {

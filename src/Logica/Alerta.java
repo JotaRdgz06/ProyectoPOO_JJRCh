@@ -46,9 +46,14 @@ public class Alerta implements Serializable {
 	}
 
 	public boolean debeActivarse() {
-        if (LocalDateTime.now().isAfter(fechaActivacion))
-        	return true;
+        if (!LocalDateTime.now().isAfter(fechaActivacion))
+        	return false;
         if (tipo == Alerta.TipoAlerta.UNA_VEZ && yaActivada == true)
         	return false;
+        return true;
     }
+	
+	public void marcarComoActivada() {
+		this.yaActivada = true;
+	}
 }
