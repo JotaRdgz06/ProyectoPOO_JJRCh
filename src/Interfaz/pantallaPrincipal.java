@@ -17,6 +17,7 @@ import Logica.Alerta.TipoAlerta;
 import Logica.Categoria;
 import Logica.Item;
 import Logica.Prestamo;
+import Logica.Tipo;
 
 import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
@@ -88,7 +89,7 @@ public class pantallaPrincipal {
 		frmPrestamos.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 436, 291);
+		tabbedPane.setBounds(0, 0, 436, 252);
 		frmPrestamos.getContentPane().add(tabbedPane);
 		
 		JPanel prestamo = new JPanel();
@@ -176,6 +177,13 @@ public class pantallaPrincipal {
 		JButton btnItems = new JButton("Ítems");
 		btnItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Controladora control = Controladora.getInstance();
+				List<Categoria> categorias = control.consultarCategoria();
+				List<Tipo> tipos = control.consultarTipo();
+				if (categorias.isEmpty() || tipos.isEmpty()) {
+					JOptionPane.showMessageDialog(frmPrestamos, "Debe crear al menos una categoría y un tipo primero", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				pantallaItems ventanaDetalleCliente = new pantallaItems();
 				ventanaDetalleCliente.setVisible(true);
 			}
@@ -195,6 +203,28 @@ public class pantallaPrincipal {
 		
 		JPanel reportes = new JPanel();
 		tabbedPane.addTab("Reportes", null, reportes, null);
+		reportes.setLayout(null);
+		
+		JButton btnReportePorUsuario = new JButton("Reporte por usuario");
+		btnReportePorUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reporteUsuario();
+			}
+		});
+		btnReportePorUsuario.setBounds(126, 10, 167, 33);
+		reportes.add(btnReportePorUsuario);
+		
+		JButton btnReportePorItem = new JButton("Reporte por item");
+		btnReportePorItem.setBounds(126, 65, 167, 33);
+		reportes.add(btnReportePorItem);
+		
+		JButton btnReportePorCategora = new JButton("Reporte por categoría");
+		btnReportePorCategora.setBounds(126, 124, 167, 33);
+		reportes.add(btnReportePorCategora);
+		
+		JButton btnReportePorTipo = new JButton("Reporte por tipo");
+		btnReportePorTipo.setBounds(126, 182, 167, 33);
+		reportes.add(btnReportePorTipo);
 	}
 	
 	private void cargarPrestamos() {
@@ -247,6 +277,11 @@ public class pantallaPrincipal {
 				}
 			}
 		}
+	}
+	
+	private void reporteUsuario() {
+		reporteUsuario ventanaDetalleCliente = new reporteUsuario();
+		ventanaDetalleCliente.setVisible(true);
 	}
 	
 	private void cargarDatos() {
