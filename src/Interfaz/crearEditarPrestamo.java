@@ -30,6 +30,9 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.time.LocalDateTime;
 
 public class crearEditarPrestamo extends JDialog {
 
@@ -66,6 +69,15 @@ public class crearEditarPrestamo extends JDialog {
 	}
 	
 	public crearEditarPrestamo(Prestamo prestamo) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				for (Item item : itemsAgregados) {
+					item.marcarComoLibre();
+				}
+				dispose();
+			}
+		});
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
@@ -237,23 +249,44 @@ public class crearEditarPrestamo extends JDialog {
             JOptionPane.showMessageDialog(contentPanel, "Debe agregar al menos un item", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        String tipoAlertaSeleccionado = (String) comboBox_1.getSelectedItem();
-        
-        if (tipoAlertaSeleccionado.equals("Sin alerta")) {
-        	lblNewLabel_4.setText("minutos (si ingresa algo será ignorado)");
-        }
         try {
             Controladora control = Controladora.getInstance();
             Prestamo nuevoPrestamo = control.crearPrestamo(usuario);
             for (Item item : itemsAgregados) {
                 nuevoPrestamo.agregarItem(item);
             }
+            String tipoAlertaSeleccionado = (String) comboBox_1.getSelectedItem();
+            
+            if (tipoAlertaSeleccionado != "Sin alerta") {
+            	String minutosTexto = textField.getText().trim();
+            	if (minutosTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(contentPanel, "Debe ingresar los minutos para la alerta", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            	try {
+            		int minutos = Integer.parseInt(minutosTexto);
+                	if (minutosTexto.isEmpty() || minutos <= 0) {
+                		JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un valor positivo", "Error", JOptionPane.ERROR_MESSAGE);
+                	}
+                	LocalDateTime fechaActivacion = LocalDateTime.now().plusMinutes(minutos);
+                	Alerta.TipoAlerta tipo;
+                	if (tipoAlertaSeleccionado.equals("Una vez")) {
+                	    tipo = Alerta.TipoAlerta.UNA_VEZ;
+                	} else {
+                	    tipo = Alerta.TipoAlerta.RECURRENTE;
+                	}
+                	nuevoPrestamo.setAlerta(new Alerta(tipo, fechaActivacion, "Alerta préstamo " + nuevoPrestamo.getCodigo()));
+            	} catch (Exception e) {
+            		JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+    			}
+            }
             JOptionPane.showMessageDialog(contentPanel, "Se ha creado el prestamo");
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(contentPanel, "Error: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
 	}
 	
 	public void agregarItem() {
