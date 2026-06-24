@@ -102,7 +102,7 @@ public class Controladora implements Serializable {
 	
 	public void borrarUsuario(Usuario usuario) throws Exception {
 		if (!usuarios.contains(usuario))
-			throw new Exception("No se encontró el item");
+			throw new Exception("No se encontró el usuario");
 		if (!usuario.puedeEliminarse())
 			throw new Exception("El usuario tiene prestamos pendientes");
 		usuarios.remove(usuario);

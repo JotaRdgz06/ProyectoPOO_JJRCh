@@ -52,7 +52,7 @@ public class pantallaUsuarios extends JDialog {
 			}
 		});
 		setModal(true);
-		setTitle("Cliente");
+		setTitle("Usuarios");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());

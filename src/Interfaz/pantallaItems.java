@@ -45,6 +45,7 @@ public class pantallaItems extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaItems() {
+		setTitle("Items");
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {

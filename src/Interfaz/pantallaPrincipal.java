@@ -32,7 +32,7 @@ import javax.swing.JLabel;
 
 public class pantallaPrincipal {
 
-	private JFrame frame;
+	private JFrame frmPrestamos;
 	private JTable table;
 	private JScrollPane scrollPane;
 
@@ -44,7 +44,7 @@ public class pantallaPrincipal {
 			public void run() {
 				try {
 					pantallaPrincipal window = new pantallaPrincipal();
-					window.frame.setVisible(true);
+					window.frmPrestamos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,15 +64,16 @@ public class pantallaPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.addComponentListener(new ComponentAdapter() {
+		frmPrestamos = new JFrame();
+		frmPrestamos.setTitle("Prestamos");
+		frmPrestamos.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				cargarPrestamos();
 			}
 		});
-		frame.setResizable(false);
-		frame.addWindowListener(new WindowAdapter() {
+		frmPrestamos.setResizable(false);
+		frmPrestamos.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				guardarDatos();
@@ -82,13 +83,13 @@ public class pantallaPrincipal {
 				verificarAlerta();
 			}
 		});
-		frame.setBounds(100, 100, 450, 289);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmPrestamos.setBounds(100, 100, 450, 289);
+		frmPrestamos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPrestamos.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 436, 291);
-		frame.getContentPane().add(tabbedPane);
+		frmPrestamos.getContentPane().add(tabbedPane);
 		
 		JPanel prestamo = new JPanel();
 		tabbedPane.addTab("Prestamo", null, prestamo, null);
@@ -217,17 +218,17 @@ public class pantallaPrincipal {
 	private void borrarPrestamo() {
 		int numeroFila = table.getSelectedRow();
 		if (numeroFila == -1) {
-			JOptionPane.showMessageDialog(frame, "Debe seleccionar un prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(frmPrestamos, "Debe seleccionar un prestamo", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Controladora control = Controladora.getInstance();
 			Prestamo prestamo = control.consultarPrestamo().get(numeroFila);
-			int respuesta = JOptionPane.showConfirmDialog(frame, "Se finalizará el prestamo " + prestamo.getCodigo() + " del usuario " + prestamo.getUsuario().getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
+			int respuesta = JOptionPane.showConfirmDialog(frmPrestamos, "Se finalizará el prestamo " + prestamo.getCodigo() + " del usuario " + prestamo.getUsuario().getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
 					control.finalizarPrestamo(prestamo);
 					cargarPrestamos();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(frame, "Error al finalizar el prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmPrestamos, "Error al finalizar el prestamo", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -241,7 +242,7 @@ public class pantallaPrincipal {
 			if (prestamo.tieneAlerta()) {
 				Alerta alerta = prestamo.getAlerta();
 				if (alerta.debeActivarse()) {
-					JOptionPane.showMessageDialog(frame, "Atención: el prestamo del usuario " + prestamo.getUsuario() + " ha finalizado", "Alerta de prestamo", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frmPrestamos, "Atención: el prestamo del usuario " + prestamo.getUsuario() + " ha finalizado", "Alerta de prestamo", JOptionPane.WARNING_MESSAGE);
 					alerta.marcarComoActivada();
 				}
 			}
@@ -253,7 +254,7 @@ public class pantallaPrincipal {
 			Controladora.cargarDatos();
 		} catch (java.io.FileNotFoundException e) {
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(frmPrestamos, "Error al cargar los datos" + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -261,7 +262,7 @@ public class pantallaPrincipal {
 		try {
 			Controladora.guardarDatos();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(frmPrestamos, "Error al guardar los datos: " + e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

@@ -46,6 +46,7 @@ public class pantallaCategorias extends JDialog {
 	 * Create the dialog.
 	 */
 	public pantallaCategorias() {
+		setTitle("Categorias");
 		setResizable(false);
 		setModal(true);
 		addComponentListener(new ComponentAdapter() {
