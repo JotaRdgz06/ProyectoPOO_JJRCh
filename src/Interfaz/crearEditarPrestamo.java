@@ -67,11 +67,11 @@ public class crearEditarPrestamo extends JDialog {
 	 */
 	
 	public crearEditarPrestamo() {
-		setTitle("Crear/editar prestamo");
 		this(null);
 	}
 	
 	public crearEditarPrestamo(Prestamo prestamo) {
+		setTitle("Crear/editar prestamo");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

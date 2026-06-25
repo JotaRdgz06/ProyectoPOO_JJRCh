@@ -64,11 +64,11 @@ public class crearEditarItem extends JDialog {
 	 */
 	
 	public crearEditarItem() {
-		setTitle("Crear/editar item");
 		this(null);
 	}
 	
 	public crearEditarItem(Item item) {
+		setTitle("Crear/editar item");
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {

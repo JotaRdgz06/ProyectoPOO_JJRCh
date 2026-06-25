@@ -44,11 +44,11 @@ public class crearEditarUsuario extends JDialog {
 	 */
 	
 	public crearEditarUsuario() {
-		setTitle("Crear/editar usuario");
 		this(null);
 	}
 	
 	public crearEditarUsuario(Usuario usuario) {
+		setTitle("Crear/editar usuario");
 		setModal(true);
 		setResizable(false);
 		this.seEstaEditando = usuario;
