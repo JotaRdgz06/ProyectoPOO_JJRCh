@@ -43,6 +43,7 @@ public class crearEditarTipo extends JDialog {
 	 */
 	
 	public crearEditarTipo() {
+		setTitle("Crear/editar tipo");
 		this(null);
 	}
 	

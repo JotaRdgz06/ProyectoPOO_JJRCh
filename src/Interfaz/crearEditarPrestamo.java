@@ -67,6 +67,7 @@ public class crearEditarPrestamo extends JDialog {
 	 */
 	
 	public crearEditarPrestamo() {
+		setTitle("Crear/editar prestamo");
 		this(null);
 	}
 	

@@ -64,6 +64,7 @@ public class crearEditarItem extends JDialog {
 	 */
 	
 	public crearEditarItem() {
+		setTitle("Crear/editar item");
 		this(null);
 	}
 	

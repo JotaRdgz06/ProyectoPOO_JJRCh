@@ -47,6 +47,7 @@ public class agregarItemsPrestamo extends JDialog {
 	 * Create the dialog.
 	 */
 	public agregarItemsPrestamo() {
+		setTitle("Agregar item");
 		setResizable(false);
 		setModal(true);
 		addComponentListener(new ComponentAdapter() {

@@ -44,6 +44,7 @@ public class crearEditarUsuario extends JDialog {
 	 */
 	
 	public crearEditarUsuario() {
+		setTitle("Crear/editar usuario");
 		this(null);
 	}
 	

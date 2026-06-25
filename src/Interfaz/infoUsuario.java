@@ -48,6 +48,7 @@ public class infoUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public infoUsuario(Usuario usuario) {
+		setTitle("Info de usuario");
 		this.usuario = usuario;
 		setModal(true);
 		setResizable(false);

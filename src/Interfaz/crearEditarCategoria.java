@@ -43,6 +43,7 @@ public class crearEditarCategoria extends JDialog {
 	 */
 	
 	public crearEditarCategoria() {
+		setTitle("Crear/editar categoria");
 		this(null);
 	}
 	
