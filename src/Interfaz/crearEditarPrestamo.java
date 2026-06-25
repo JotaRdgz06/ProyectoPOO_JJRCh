@@ -315,7 +315,7 @@ public class crearEditarPrestamo extends JDialog {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un item", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			Controladora control = Controladora.getInstance();
-			Item item= control.consultarItem().get(numeroFila);
+			Item item= itemsAgregados.get(numeroFila);
 			int respuesta = JOptionPane.showConfirmDialog(contentPanel, "Se eliminará el item " + item.getNombre(), "Confirmar", JOptionPane.YES_NO_OPTION);
 			if (respuesta == JOptionPane.YES_OPTION) {
 				try {
