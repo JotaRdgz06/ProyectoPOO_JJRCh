@@ -49,7 +49,7 @@ public class reporteCategoria extends JDialog {
 	public reporteCategoria() {
 		setResizable(false);
 		setModal(true);
-		setTitle("Reporte item");
+		setTitle("Reporte categoria");
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
