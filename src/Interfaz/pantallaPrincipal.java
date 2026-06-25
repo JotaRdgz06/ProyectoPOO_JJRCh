@@ -215,14 +215,29 @@ public class pantallaPrincipal {
 		reportes.add(btnReportePorUsuario);
 		
 		JButton btnReportePorItem = new JButton("Reporte por item");
+		btnReportePorItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reporteItem();
+			}
+		});
 		btnReportePorItem.setBounds(126, 65, 167, 33);
 		reportes.add(btnReportePorItem);
 		
 		JButton btnReportePorCategora = new JButton("Reporte por categoría");
+		btnReportePorCategora.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reporteCategoria();
+			}
+		});
 		btnReportePorCategora.setBounds(126, 124, 167, 33);
 		reportes.add(btnReportePorCategora);
 		
 		JButton btnReportePorTipo = new JButton("Reporte por tipo");
+		btnReportePorTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reporteTipo();
+			}
+		});
 		btnReportePorTipo.setBounds(126, 182, 167, 33);
 		reportes.add(btnReportePorTipo);
 	}
@@ -281,6 +296,21 @@ public class pantallaPrincipal {
 	
 	private void reporteUsuario() {
 		reporteUsuario ventanaDetalleCliente = new reporteUsuario();
+		ventanaDetalleCliente.setVisible(true);
+	}
+	
+	private void reporteItem() {
+		reporteItem ventanaDetalleCliente = new reporteItem();
+		ventanaDetalleCliente.setVisible(true);
+	}
+	
+	private void reporteCategoria() {
+		reporteCategoria ventanaDetalleCliente = new reporteCategoria();
+		ventanaDetalleCliente.setVisible(true);
+	}
+	
+	private void reporteTipo() {
+		reporteTipo ventanaDetalleCliente = new reporteTipo();
 		ventanaDetalleCliente.setVisible(true);
 	}
 	

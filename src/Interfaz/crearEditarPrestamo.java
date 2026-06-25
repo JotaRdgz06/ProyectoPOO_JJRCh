@@ -267,6 +267,7 @@ public class crearEditarPrestamo extends JDialog {
             		int minutos = Integer.parseInt(minutosTexto);
                 	if (minutosTexto.isEmpty() || minutos <= 0) {
                 		JOptionPane.showMessageDialog(contentPanel, "Debe ingresar un valor positivo", "Error", JOptionPane.ERROR_MESSAGE);
+                		return;
                 	}
                 	LocalDateTime fechaActivacion = LocalDateTime.now().plusMinutes(minutos);
                 	Alerta.TipoAlerta tipo;

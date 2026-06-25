@@ -42,6 +42,8 @@ public class reporteUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public reporteUsuario() {
+		setModal(true);
+		setResizable(false);
 		setTitle("Reporte usuario");
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -82,6 +84,10 @@ public class reporteUsuario extends JDialog {
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton = new JButton("Más información");
+		btnNewButton.setBounds(10, 202, 149, 20);
+		contentPanel.add(btnNewButton);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
