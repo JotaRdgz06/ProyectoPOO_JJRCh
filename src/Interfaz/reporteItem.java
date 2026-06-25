@@ -72,27 +72,29 @@ public class reporteItem extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Nombre", "Descripci\u00F3n", "Tipo", "Prestado", "Usuario"
+				"C\u00F3digo", "Nombre", "Descripci\u00F3n", "Tipo", "Prestado", "Usuario"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class
+				String.class, String.class, String.class, String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				true, true, false, false, false
+				false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(47);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(5).setResizable(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
@@ -131,7 +133,7 @@ public class reporteItem extends JDialog {
 					}
 				}
 			}
-			Object[] fila = new Object[] {item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS(), nombreUsuario};
+			Object[] fila = new Object[] {item.getCodigo(), item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS(), nombreUsuario};
     		model.addRow(fila);
 		}
 	}

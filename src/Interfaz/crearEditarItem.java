@@ -18,6 +18,8 @@ import Logica.Tipo;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ResourceBundle.Control;
@@ -42,6 +44,7 @@ public class crearEditarItem extends JDialog {
 	private JScrollPane scrollPane;
 	private JList<Categoria> list;
 	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
 
 	/**
 	 * Launch the application.
@@ -129,7 +132,7 @@ public class crearEditarItem extends JDialog {
 		contentPanel.add(comboBox);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(305, 30, 168, 181);
+		scrollPane.setBounds(305, 39, 168, 172);
 		contentPanel.add(scrollPane);
 		
 		list = new JList<>();
@@ -160,6 +163,11 @@ public class crearEditarItem extends JDialog {
 						dispose();
 					}
 				});
+				list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+				
+				lblNewLabel_4 = new JLabel("(Presione ctrl+clic para seleccionar varias)");
+				lblNewLabel_4.setBounds(218, 22, 255, 12);
+				contentPanel.add(lblNewLabel_4);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 				

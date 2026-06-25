@@ -68,7 +68,7 @@ public class Controladora implements Serializable {
 			item.setNombre(nombre);
 			item.setDescripcion(descripcion);
 			item.setTipo(tipo);
-			item.getCategorias();
+			item.getCategorias().clear();;
 			for (Categoria categoria : categorias)
 				item.agregarCategoria(categoria);
 		}
