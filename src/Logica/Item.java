@@ -10,7 +10,7 @@ public class Item implements Serializable {
 	private String descripcion;
 	private boolean prestado;
 	private Tipo tipo;
-	private Prestamo prestamo;
+	private List<Prestamo> prestamos;
 	private List<Categoria> categorias;
 	
 	public Item(int codigo, String nombre, String descripcion, Tipo tipo) {
@@ -20,7 +20,7 @@ public class Item implements Serializable {
 		this.prestado = false;
 		this.tipo = tipo;
 		this.categorias = new ArrayList<>();
-        this.prestamo = null;
+        this.prestamos = new ArrayList<>();
 	}
 
 	public int getCodigo() {
@@ -102,4 +102,8 @@ public class Item implements Serializable {
 	public void ponerTipoGenerico(Tipo tipoGenerico) {
         this.tipo = tipoGenerico;
     }
+	
+	public List<Prestamo> getPrestamo() {
+		return prestamos;
+	}
 }
