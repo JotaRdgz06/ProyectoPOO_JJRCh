@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import Control.Controladora;
 import Logica.Item;
 import Logica.Prestamo;
+import Logica.Usuario;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -26,13 +27,14 @@ public class infoUsuario extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
+	private Usuario usuario;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			infoUsuario dialog = new infoUsuario();
+			infoUsuario dialog = new infoUsuario(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -43,7 +45,8 @@ public class infoUsuario extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public infoUsuario() {
+	public infoUsuario(Usuario usuario) {
+		this.usuario = usuario;
 		setModal(true);
 		setResizable(false);
 		addComponentListener(new ComponentAdapter() {
@@ -108,10 +111,8 @@ public class infoUsuario extends JDialog {
 		Controladora control = Controladora.getInstance();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		List<Prestamo> listaUsuarios = control.consultarPrestamo();
-		for (Prestamo prestamo : listaUsuarios) {
-			List<Item> itemPrestamo = prestamo.getItems();
-			for(Item item : itemPrestamo) {
+		for (Prestamo prestamo : usuario.getPrestamos()) {
+			for(Item item : prestamo.getItems()) {
 				Object[] fila = new Object[] {item.getNombre()};
 				model.addRow(fila);
 			}

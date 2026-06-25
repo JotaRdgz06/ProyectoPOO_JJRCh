@@ -193,7 +193,8 @@ public class pantallaUsuarios extends JDialog {
 		if (numeroFila == -1) {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			Usuario usuario = Controladora.getInstance().consultarUsuario().get(numeroFila);
+			Controladora control = Controladora.getInstance();
+			Usuario usuario = control.consultarUsuario().get(numeroFila);
 			crearEditarUsuario ventana = new crearEditarUsuario(usuario);
 			ventana.setVisible(true); 
 			cargarUsuarios();

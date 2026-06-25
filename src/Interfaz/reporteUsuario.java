@@ -20,6 +20,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class reporteUsuario extends JDialog {
 
@@ -60,7 +61,7 @@ public class reporteUsuario extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 416, 179);
+		scrollPane.setBounds(10, 30, 416, 159);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -68,23 +69,25 @@ public class reporteUsuario extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Usuarios con prestamos activos:"
+				"Nombre", "Correo", "Telefono"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class
+				String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				false
+				false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
 		scrollPane.setViewportView(table);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JButton btnNewButton = new JButton("Más información");
@@ -95,6 +98,10 @@ public class reporteUsuario extends JDialog {
 		});
 		btnNewButton.setBounds(10, 202, 149, 20);
 		contentPanel.add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("Usuarios con prestamos activos:");
+		lblNewLabel.setBounds(10, 8, 224, 12);
+		contentPanel.add(lblNewLabel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -118,7 +125,9 @@ public class reporteUsuario extends JDialog {
 		if (numeroFila == -1) {
 			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			infoUsuario ventanaDetalleCliente = new infoUsuario();
+			Controladora control = Controladora.getInstance();
+			Usuario usuarioSeleccionado = control.reporteUsuario().get(numeroFila);
+			infoUsuario ventanaDetalleCliente = new infoUsuario(usuarioSeleccionado);
 			ventanaDetalleCliente.setVisible(true);
 		}
 	}
@@ -129,7 +138,7 @@ public class reporteUsuario extends JDialog {
 		model.setRowCount(0);
 		List<Usuario> listaUsuarios = control.reporteUsuario();
 		for (Usuario usuario: listaUsuarios) {
-			Object[] fila = new Object[] {usuario.getNombre()};
+			Object[] fila = new Object[] {usuario.getNombre(), usuario.getCorreo(), usuario.getTelefono()};
 			model.addRow(fila);
 		}
 	}
