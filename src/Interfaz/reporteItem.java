@@ -64,7 +64,7 @@ public class reporteItem extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 30, 416, 159);
+		scrollPane.setBounds(10, 30, 416, 192);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -96,15 +96,6 @@ public class reporteItem extends JDialog {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton = new JButton("Más información");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewButton.setBounds(10, 202, 149, 20);
-		contentPanel.add(btnNewButton);
-		
 		JLabel lblNewLabel = new JLabel("Todos los items:");
 		lblNewLabel.setBounds(10, 10, 127, 12);
 		contentPanel.add(lblNewLabel);
@@ -131,16 +122,17 @@ public class reporteItem extends JDialog {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for (Item item : control.reporteItem()) {
-			if (item.estaPrestado()) {
+			String nombreUsuario = "-";
+			if(item.estaPrestado()) {
 				for (Prestamo prestamo : control.consultarPrestamo()) {
 					if (prestamo.getItems().contains(item)) {
 						Usuario usuario = prestamo.getUsuario();
-		                String nombreUsuario = usuario.getNombre();
-		                Object[] fila = new Object[] {item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS(), nombreUsuario};
-		    			model.addRow(fila);
+			            nombreUsuario = usuario.getNombre();
 					}
 				}
 			}
+			Object[] fila = new Object[] {item.getNombre(), item.getDescripcion(), item.getTipo(), item.estaPrestadoS(), nombreUsuario};
+    		model.addRow(fila);
 		}
 	}
 }
