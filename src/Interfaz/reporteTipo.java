@@ -88,6 +88,11 @@ public class reporteTipo extends JDialog {
 		scrollPane.setViewportView(table);
 		
 		JButton btnNewButton = new JButton("Más información");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				infoTipo();
+			}
+		});
 		btnNewButton.setBounds(10, 202, 149, 20);
 		contentPanel.add(btnNewButton);
 		{
@@ -106,6 +111,11 @@ public class reporteTipo extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
+	}
+	
+	private void infoTipo() {
+		infoTipo ventanaDetalleCliente = new infoTipo();
+		ventanaDetalleCliente.setVisible(true);
 	}
 	
 	private void cargarReporteUsuario() {

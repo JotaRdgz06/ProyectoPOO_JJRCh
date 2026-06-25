@@ -87,6 +87,11 @@ public class reporteItem extends JDialog {
 		scrollPane.setViewportView(table);
 		
 		JButton btnNewButton = new JButton("Más información");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				infoItem();
+			}
+		});
 		btnNewButton.setBounds(10, 202, 149, 20);
 		contentPanel.add(btnNewButton);
 		{
@@ -105,6 +110,11 @@ public class reporteItem extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
+	}
+	
+	private void infoItem() {
+		infoItem ventanaDetalleCliente = new infoItem();
+		ventanaDetalleCliente.setVisible(true);
 	}
 	
 	private void cargarReporteUsuario() {
