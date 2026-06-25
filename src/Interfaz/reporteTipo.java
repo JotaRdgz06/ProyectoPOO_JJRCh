@@ -14,13 +14,16 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
+import Logica.Categoria;
 import Logica.Item;
+import Logica.Prestamo;
 import Logica.Tipo;
 import Logica.Usuario;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class reporteTipo extends JDialog {
 
@@ -47,11 +50,11 @@ public class reporteTipo extends JDialog {
 	public reporteTipo() {
 		setResizable(false);
 		setModal(true);
-		setTitle("Reporte item");
+		setTitle("Reporte tipo");
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				cargarReporteUsuario();
+				cargarReporteCategoria();
 			}
 		});
 		setBounds(100, 100, 450, 300);
@@ -61,7 +64,7 @@ public class reporteTipo extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 416, 179);
+		scrollPane.setBounds(10, 35, 416, 187);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -69,34 +72,31 @@ public class reporteTipo extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Todos los items:"
+				"C\u00F3digo", "Nombre", "Items que lo tienen"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class
+				String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 			boolean[] columnEditables = new boolean[] {
-				false
+				false, true, true
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton = new JButton("Más información");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				infoTipo();
-			}
-		});
-		btnNewButton.setBounds(10, 202, 149, 20);
-		contentPanel.add(btnNewButton);
+		JLabel lblNewLabel = new JLabel("Todos los tipos:");
+		lblNewLabel.setBounds(10, 10, 127, 12);
+		contentPanel.add(lblNewLabel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -115,19 +115,18 @@ public class reporteTipo extends JDialog {
 		}
 	}
 	
-	private void infoTipo() {
-		infoTipo ventanaDetalleCliente = new infoTipo();
-		ventanaDetalleCliente.setVisible(true);
-	}
-	
-	private void cargarReporteUsuario() {
+	private void cargarReporteCategoria() {
 		Controladora control = Controladora.getInstance();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		List<Tipo> listaUsuarios = control.reporteTipo();
-		for (Tipo tipo: listaUsuarios) {
-			Object[] fila = new Object[] {tipo.getNombre()};
-			model.addRow(fila);
+		for (Tipo tipo: control.reporteTipo()) {
+			if (categoria.getItems().isEmpty()) {
+				model.addRow(new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre(), "-"});
+			} else {
+				for (Item item : categoria.getItems()) {
+					model.addRow(new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre(), item.getNombre()});
+				}
+			}
 		}
 	}
 }
