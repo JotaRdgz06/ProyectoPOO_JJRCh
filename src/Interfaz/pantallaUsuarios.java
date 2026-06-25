@@ -85,17 +85,19 @@ public class pantallaUsuarios extends JDialog {
 						return columnTypes[columnIndex];
 					}
 					boolean[] columnEditables = new boolean[] {
-						true, true, false
+						false, false, false
 					};
 					public boolean isCellEditable(int row, int column) {
 						return columnEditables[column];
 					}
 				});
-				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				table.getColumnModel().getColumn(0).setResizable(false);
 				table.getColumnModel().getColumn(0).setPreferredWidth(109);
 				table.getColumnModel().getColumn(1).setResizable(false);
 				table.getColumnModel().getColumn(1).setPreferredWidth(197);
+				table.getColumnModel().getColumn(2).setResizable(false);
 				table.getColumnModel().getColumn(2).setPreferredWidth(126);
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				scrollPane.setViewportView(table);
 			}
 		}

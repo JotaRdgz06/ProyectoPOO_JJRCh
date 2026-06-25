@@ -19,6 +19,8 @@ import Logica.Usuario;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +147,7 @@ public class crearEditarPrestamo extends JDialog {
 						return columnEditables[column];
 					}
 				});
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				table.getColumnModel().getColumn(0).setResizable(false);
 				scrollPane.setViewportView(table);
 			}

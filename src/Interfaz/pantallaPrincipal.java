@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import Control.Controladora;
@@ -130,6 +131,7 @@ public class pantallaPrincipal {
 				return columnEditables[column];
 			}
 		});
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(48);
 		table.getColumnModel().getColumn(1).setResizable(false);

@@ -84,10 +84,10 @@ public class pantallaTipos extends JDialog {
 						return columnEditables[column];
 					}
 				});
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				table.getColumnModel().getColumn(0).setResizable(false);
 				table.getColumnModel().getColumn(1).setResizable(false);
 				scrollPane.setViewportView(table);
-				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			}
 		}
 		{

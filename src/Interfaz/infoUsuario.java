@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -86,6 +88,7 @@ public class infoUsuario extends JDialog {
 					return columnEditables[column];
 				}
 			});
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.getColumnModel().getColumn(0).setResizable(false);
 			scrollPane.setViewportView(table);
 		}
