@@ -55,6 +55,7 @@ public class Controladora implements Serializable {
 	
 	public void crearItem(String nombre, String descripcion, Tipo tipo, List<Categoria> categorias) throws Exception {
 		Item nuevoItem = new Item(codigoAutomaticoItem, nombre, descripcion, tipo);
+		tipo.agregarItem(nuevoItem);
 		for (Categoria categoria : categorias) {
 			nuevoItem.agregarCategoria(categoria);
 			categoria.agregarItem(nuevoItem);
@@ -67,10 +68,12 @@ public class Controladora implements Serializable {
 		if (!items.contains(item)) {
 			throw new Exception("No se encontró el item");
 		} else {
+			item.getTipo().eliminarItem(item);
 			item.setNombre(nombre);
 			item.setDescripcion(descripcion);
 			item.setTipo(tipo);
 			item.getCategorias().clear();
+			tipo.agregarItem(item);
 			for (Categoria categoria : item.getCategorias())
 				categoria.eliminarItem(item);
 			item.getCategorias().clear();

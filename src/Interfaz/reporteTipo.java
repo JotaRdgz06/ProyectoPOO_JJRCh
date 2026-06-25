@@ -120,11 +120,11 @@ public class reporteTipo extends JDialog {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
 		for (Tipo tipo: control.reporteTipo()) {
-			if (categoria.getItems().isEmpty()) {
-				model.addRow(new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre(), "-"});
+			if (tipo.getItems().isEmpty()) {
+				model.addRow(new Object[] {String.valueOf(tipo.getCodigo()), tipo.getNombre(), "-"});
 			} else {
-				for (Item item : categoria.getItems()) {
-					model.addRow(new Object[] {String.valueOf(categoria.getCodigo()), categoria.getNombre(), item.getNombre()});
+				for (Item item : tipo.getItems()) {
+					model.addRow(new Object[] {String.valueOf(tipo.getCodigo()), tipo.getNombre(), item.getNombre()});
 				}
 			}
 		}
