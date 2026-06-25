@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -84,11 +86,11 @@ public class reporteUsuario extends JDialog {
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		scrollPane.setViewportView(table);
-		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JButton btnNewButton = new JButton("Más información");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				infoUsuario();
+				mostrarInfoUsuario();
 			}
 		});
 		btnNewButton.setBounds(10, 202, 149, 20);
@@ -111,9 +113,14 @@ public class reporteUsuario extends JDialog {
 		}
 	}
 	
-	private void infoUsuario() {
-		infoUsuario ventanaDetalleCliente = new infoUsuario();
-		ventanaDetalleCliente.setVisible(true);
+	private void mostrarInfoUsuario() {
+		int numeroFila = table.getSelectedRow();
+		if (numeroFila == -1) {
+			JOptionPane.showMessageDialog(contentPanel, "Debe seleccionar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			infoUsuario ventanaDetalleCliente = new infoUsuario();
+			ventanaDetalleCliente.setVisible(true);
+		}
 	}
 	
 	private void cargarReporteUsuario() {
